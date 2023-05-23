@@ -13,7 +13,7 @@ let renderer, scene, camera;
 let mesh;
 let raycaster;
 let line;
-let decalTexture;
+
 let controls;
 
 const intersection = {
@@ -25,7 +25,7 @@ const mouse = new THREE.Vector2();
 const intersects = [];
 
 const textureLoader = new THREE.TextureLoader();
-
+let decalTexture = textureLoader.load("https://avatars.githubusercontent.com/u/13419363?s=280&v=4");
 const decals = [];
 const orientations = [];
 const positions = [];
@@ -33,9 +33,19 @@ const scales = [];
 let mouseHelper;
 const position = new THREE.Vector3();
 const orientation = new THREE.Euler();
+const reader = new FileReader();
+
+function readTexture() {
+    let fileInput = document.getElementById('file-input')
+
+    reader.readAsDataURL(fileInput.files[0])
+    reader.onload = function (e) {
+        decalTexture = textureLoader.load(reader.result)
+    };
+}
 
 const params = {
-    'image url': "https://avatars.githubusercontent.com/u/13419363?s=280&v=4",
+    'image url': readTexture,
     'rotate last': 0.0,
     'scale last': 0.0,
     'delete last': function () {
@@ -168,7 +178,14 @@ function init() {
 
     const gui = new GUI();
 
-    gui.add(params, 'image url');
+    let f = gui.add(params, 'image url');
+    f.$button.remove()
+    f.$button = document.createElement('input')
+    f.$button.setAttribute("type", "file")
+    f.$button.appendChild(f.$name)
+    f.$widget.appendChild(f.$button)
+    f.$button.id = 'file-input';
+    f.$button.onchange = readTexture;
     let r = gui.add(params, 'rotate last', -180, 180);
     let s = gui.add(params, 'scale last', -1, 2);
     r.$input.addEventListener('input', rotateDecal);
@@ -182,7 +199,7 @@ function init() {
 }
 
 function rotateDecal() {
-    if ( decals.length > 0 ) {
+    if (decals.length > 0) {
         scene.remove(decals.pop());
         orientation.copy(orientations.pop());
         const scale = scales.at(-1);
@@ -209,7 +226,7 @@ function rotateDecal() {
 }
 
 function scaleDecal() {
-    if ( decals.length > 0 ) {
+    if (decals.length > 0) {
         scene.remove(decals.pop());
         scales.pop();
         const scale = 30 * 10 ** params['scale last']
@@ -248,8 +265,6 @@ function loadArc() {
 }
 
 function shoot() {
-    decalTexture = textureLoader.load(params['image url']);
-    decalTexture.colorSpace = THREE.SRGBColorSpace;
     position.copy(intersection.point);
     orientation.copy(mouseHelper.rotation);
     const scale = 30
