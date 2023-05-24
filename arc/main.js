@@ -188,10 +188,12 @@ function init() {
     f.$button.onchange = readTexture;
     let r = gui.add(params, 'rotate last', -180, 180);
     let s = gui.add(params, 'scale last', -1, 2);
-    r.$input.addEventListener('input', rotateDecal);
+    r.$widget.addEventListener('input', rotateDecal);
     r.$slider.addEventListener('mouseup', rotateDecal);
+    r.$slider.addEventListener('touchend', rotateDecal);
     s.$input.addEventListener('input', scaleDecal);
     s.$slider.addEventListener('mouseup', scaleDecal);
+    s.$slider.addEventListener('touchend', rotateDecal);
     gui.add(params, 'delete last');
     gui.add(params, 'reset');
     gui.open();
