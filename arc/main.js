@@ -31,8 +31,6 @@ const orientations = [];
 const positions = [];
 const scales = [];
 let mouseHelper;
-const position = new THREE.Vector3();
-const orientation = new THREE.Euler();
 const reader = new FileReader();
 
 function readTexture() {
@@ -203,11 +201,11 @@ function init() {
 function rotateDecal() {
     if (decals.length > 0) {
         scene.remove(decals.pop());
+        let orientation = new THREE.Euler();
         orientation.copy(orientations.pop());
-        const scale = scales.at(-1);
         orientation.z = params['rotate last'] / 180.0 * Math.PI;
         const new_m = new THREE.Mesh(
-            new DecalGeometry(mesh, positions.at(-1), orientation, new THREE.Vector3(scale, scale, scale)),
+            new DecalGeometry(mesh, positions.at(-1), orientation, new THREE.Vector3(scales.at(-1), scales.at(-1), scales.at(-1))),
             new THREE.MeshPhongMaterial({
                 map: decalTexture,
                 normalScale: new THREE.Vector2(1, 1),
@@ -267,6 +265,8 @@ function loadArc() {
 }
 
 function shoot() {
+    let position = new THREE.Vector3();
+    let orientation = new THREE.Euler();
     position.copy(intersection.point);
     orientation.copy(mouseHelper.rotation);
     const scale = 30
