@@ -296,6 +296,9 @@ function shoot() {
 function removeLastDecal() {
 
     scene.remove(decals.pop())
+    positions.pop()
+    orientations.pop()
+    scales.pop()
 
 }
 
@@ -310,6 +313,7 @@ function removeDecals() {
     decals.length = 0;
     orientations.length = 0;
     positions.length = 0;
+    scales.length = 0;
 
 }
 
