@@ -193,7 +193,7 @@ function init() {
     r.$slider.addEventListener('touchend', rotateDecal);
     s.$input.addEventListener('input', scaleDecal);
     s.$slider.addEventListener('mouseup', scaleDecal);
-    s.$slider.addEventListener('touchend', rotateDecal);
+    s.$slider.addEventListener('touchend', scaleDecal);
     gui.add(params, 'delete last');
     gui.add(params, 'reset');
     gui.open();
