@@ -22360,12 +22360,7 @@
                         }), (0, Db.jsx)("div", {
                             className: Ub["support-footer"],
                             children: (0, Db.jsxs)("p", {
-                                children: ["\u041f\u043e\u0434\u0435\u043b\u0438\u0441\u044c \u0441\u0432\u043e\u0438\u043c \u043c\u043d\u0435\u043d\u0438\u0435\u043c \u0438 \u0438\u0434\u0435\u044f\u043c\u0438 \u043e\u0431 \u0438\u0433\u0440\u0435 \u0432 \u043d\u0430\u0448\u0435\u043c", " ", (0, Db.jsx)("a", {
-                                    href: "https://docs.google.com/forms/d/e/1FAIpQLSfFtf7b20Px-_VlQSOyL9BJSfXM28it8_5DPBuwaqx-AI6sMQ/viewform",
-                                    rel: "noopener noreferrer",
-                                    target: "_blank",
-                                    children: "\u043e\u043f\u0440\u043e\u0441\u0435"
-                                }), " ", ":)"]
+                                children: []
                             })
                         })]
                     })
