@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white-contrast.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h2>Application of topology-aware losses in generative neural networks training</h2>
+            Student: Andrei Spiridonov <br>
+            Advisor: Serguei Barannikov
+        </section>
+
+        <section>
+            <h2>Summary of the work:</h2>
+            <ul>
+                <li><i>Capabilities of topology-aware loss are tested</i> for generative and reconstruction tasks <i>qualitatively</i>
+                    and <i>quantitatively</i>
+                <li><i>New metric is proposed</i>, that estimates connected components at different scales
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mode collapse in generative models</h2>
+            <section>
+                <img src="images/mode_collapse/mode_collapse_four_gaussians.png">
+            </section>
+            <section>
+                <img src="images/mode_collapse/mode_collapse_mnist.png">
+            </section>
+            <section>
+                <img src="images/mode_collapse/mode_collapse_celeba_faces.png">
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Floaters in 3d point cloud reconstruction</h2>
+            </section>
+            <section data-background-iframe="bicycle.html">
+            </section>
+            <section data-background-iframe="bicycle_dbscan.html">
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2>0th persistence homologies</h2>
+                <img src="images/h0/h0_growing.gif">
+            </section>
+            <section>
+                <h2>Optimizing minimal spanning tree length</h2>
+                <!--                <div class="row">-->
+                <!--                    <div class="column" style="width:50%">-->
+                <img width="49%" src="images/l1_optimization/toydata.png">
+                <!--                    </div>-->
+                <!--                    <div class="column" style="width:50%">-->
+                <img width="49%" src="images/l1_optimization/optdata.png">
+                <!--                    </div>-->
+                <!--                </div>-->
+            </section>
+        </section>
+
+
+        <section>
+            <section data-background-iframe="https://gsplat.tech/bicycle/" data-background-interactive></section>
+            <section data-background-iframe="https://gsplat.tech/bonsai/" data-background-interactive></section>
+            <section>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td>bicycle</td>
+                        <td>bonsai</td>
+                        <td>garden</td>
+                    </tr>
+                    <tr>
+                        <td>LGCR without regularizer ↓</td>
+                        <td>58.82</td>
+                        <td><b>66.67</b></td>
+                        <td>27.03</td>
+                    </tr>
+                    <tr>
+                        <td>LGCR with regularizer ↓</td>
+                        <td><b>46.51</b></td>
+                        <td>125</td>
+                        <td><b>23.54</b></td>
+                    </tr>
+                </table>
+            </section>
+        </section>
+
+
+        <section>
+            <section>
+                <h2>
+                    Instruments: cross bar-codes
+                </h2>
+                <img src="images/cross/ALPHA02_.png" width="20%">
+                <img src="images/cross/ALPHA04.png" width="20%">
+                <img src="images/cross/ALPHA06.png" width="20%">
+                <img src="images/cross/ALPHA08_.png" width="20%">
+            </section>
+            <section>
+                <h2>
+                    Normalized loss computation
+                </h2>
+                <img src="images/loss_compute/algo.png">
+            </section>
+        </section>
+        <section>
+            <h2>
+                Toy datasets
+            </h2>
+            <section>
+                <img src="images/generative/2d/gaussian/4_mtd_distr.png" width="60%">
+                <img src="images/generative/2d/gaussian/4_mtd_ndb.png" width="30%">
+                <img src="images/generative/2d/gaussian/4_mtd_prd.png" width="33%">
+            </section>
+            <section>
+                <img src="images/generative/2d/gaussian/12_mtd_distr.png" width="60%">
+                <img src="images/generative/2d/gaussian/12_mtd_ndb.png" width="30%">
+                <img src="images/generative/2d/gaussian/12_mtd_prd.png" width="33%">
+            </section>
+            <section>
+                <img src="images/generative/2d/moons/mtd_distr.png" width="60%">
+                <img src="images/generative/2d/moons/mtd_ndb.png" width="30%">
+                <img src="images/generative/2d/moons/mtd_prd.png" width="33%">
+            </section>
+            <section>
+                <img src="images/generative/2d/roll/mtd_distr.png" width="60%">
+                <img src="images/generative/2d/roll/mtd_ndb.png" width="30%">
+                <img src="images/generative/2d/roll/mtd_prd.png" width="33%">
+            </section>
+            <section>
+                <img src="images/table/toy.png">
+            </section>
+        </section>
+
+        <section>
+            <h3>
+                MNIST
+            </h3>
+            <section>
+                <h4>
+                    GAN
+                </h4>
+                <img src="images/generative/images/mnist/gan_samples.png" width="80%">
+                <img src="images/generative/images/mnist/gan_prd.png" width="33%">
+                <img src="images/generative/images/mnist/gan_label_distribution.png" width="33%">
+            </section>
+            <section>
+                <h4>
+                    Proposed method (MTD)
+                </h4>
+                <img src="images/generative/images/mnist/mtd_samples.png" width="80%">
+                <img src="images/generative/images/mnist/mtd_prd.png" width="33%">
+                <img src="images/generative/images/mnist/mtd_label_distribution.png" width="33%">
+            </section>
+            <section>
+                <img src="images/table/mnist.png">
+            </section>
+        </section>
+
+        <section>
+            <h3>
+                CelebA
+            </h3>
+            <section>
+                <h4>
+                    GAN
+                </h4>
+                <img src="images/generative/images/celeba/gan.png" width="80%">
+                <img src="images/generative/images/celeba/gan_pr.png" width="33%">
+            </section>
+            <section>
+                <h4>
+                    MTD
+                </h4>
+                <img src="images/generative/images/celeba/mtd.png" width="80%">
+                <img src="images/generative/images/celeba/mtd_pr.png" width="33%">
+            </section>
+            <section>
+                <h4>
+                    GAN+MTD
+                </h4>
+                <img src="images/generative/images/celeba/gan_mtd.png" width="80%">
+                <img src="images/generative/images/celeba/gan_mtd_pr.png" width="33%">
+            </section>
+            <section>
+                <img src="images/table/celeba.png">
+            </section>
+        </section>
+
+
+        <section style="font-size: 0.7em">
+            <h2>Conclusion</h2>
+            <ul>
+            <li>We have shown that it is natural and beneficial to apply topological regularizations in some domains, if one has meta information or wants to impose inductive bias on structures that occur.
+            <li>Author believes that proposed regularization for point cloud regression/optimization may be quite useful if equipped within correct setup and it’s best performance regimes are yet to be found/tuned.
+            <li>Employment of higher dimensions of homologies still remains somewhat a challenge, since one needs a parallel algorithm with feasible computation time and memory requirements.
+            </ul>
+        </section>
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
+</html>
