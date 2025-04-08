@@ -1,0 +1,100 @@
+<head>
+                          <link rel="stylesheet" href="https://yastatic.net/s3/contest/katex/v0.13.0/katex.min.css" />
+                          <meta charset="UTF-8">
+                        </head><!DOCTYPE html
+  SYSTEM "html">
+<div class="problem-statement"><div class="header"><h1 class="title">optimal_master_node</h1><table><tr class="time-limit"><td class="property-title">Ограничение времени</td><td>0.5&nbsp;секунд</td></tr><tr class="memory-limit"><td class="property-title">Ограничение памяти</td><td>64&nbsp;Мб</td></tr><tr class="input-file"><td class="property-title">Ввод</td><td colspan="1">стандартный ввод или input.txt</td></tr><tr class="output-file"><td class="property-title">Вывод</td><td colspan="1">стандартный вывод или output.txt</td></tr></table></div><h2></h2><div class="legend"><p>Для обучения Большой Языковой Модели компания БЕРС построила кластер с N устройствами GPU и соединила их в сеть с помощью M Ethernet-шин с огромной пропускной способностью, но конечной задержкой передачи сигнала - T_ij миллисекунд. Tо есть время, которое потребуется пакету любого размера от устройства i, чтобы напрямую достичь устройства j, составляет T_ij, если они подключены (шина работает одинаково в обоих направлениях). Однако данные с одного устройства могут быть переданы на другое через какие-то промежуточные ГПУ. Также заметьте, что данные всегда оптимально передавать единым пакетом, тк пропускная способность шин эффективно бесконечная. В процессе обучения после каждого шага вычислений, мы должны синхронизировать (суммировать) все полученные градиенты на одном из устройств, предварительно отправив их туда. Кроме того, из-за глобального потепления, устройства GPU периодически перегреваются и полностью выходят из строя, теряя возможность, как участвовать в вычислениях, так и пересылать градиентную информацию другим устройствам. Как главный специалист по инфраструктуре БЕРСа – реализуйте алгоритм, который, после выхода из строя каждого устройства, укажет – на каком из оставшихся производить синхронизацию с минимальными издержками по времени передачи данных.</p></div><h2>Формат ввода</h2><div class="input-specification"><p>stdin or <code>input.txt</code> file</p> 
+<pre><code>N (количество вершин в графе устройств 1&lt;=N&lt;=300) M (количество шин 1 &lt;= M &lt;= C_N^2)
+&lt;for m in range(M)&gt;
+i (номер вершины 0 &lt;= i &lt;= N-1) j (номер вершины 0 &lt;= j &lt;= N-1) T_ij (задержка 1 &lt;= T_ij &lt;= 10000)
+&lt;for n in range(N)&gt;
+i (некоторый номер отключенного устройства)</code></pre></div><h2>Формат вывода</h2><div class="output-specification"><p>stdout or <code>output.txt</code> file</p> 
+<pre><code>&lt;for n in range(N + 1)&gt;
+i (номер вершины для master устройства) T (время, необходимое для синхронизации всех устройств) &lt;or&gt; device mesh not connected (если нет возможности собрать данные со всех устройств на одном) &lt;or&gt; no devices left (после того, как последнее устройство перестало работать)</code></pre> 
+<p>Таким образом в каждой строчке выходного файла должно быть записано: оптимальное устройство (если таких устройств несколько - выведите любое), время синхронизации, или строка с информацией о невозможности произвести синхронизацию градиентов после очередной поломки</p></div><h3>Пример 1</h3><table class="sample-tests"><thead><tr><th>Ввод</th><th>Вывод</th></tr></thead><tbody><tr><td><pre>7 6
+0 1 1
+2 1 2
+1 3 3
+3 5 4
+5 4 10
+5 6 11
+0
+2
+1
+4
+5
+6
+3</pre></td><td><pre>5 11
+5 11
+5 11
+5 11
+5 11
+device mesh not connected
+3 0
+no devices left
+</pre></td></tr></tbody></table><h3>Пример 2</h3><table class="sample-tests"><thead><tr><th>Ввод</th><th>Вывод</th></tr></thead><tbody><tr><td><pre>8 12
+0 1 1
+2 3 1
+6 7 1
+4 5 1
+1 5 2
+3 7 2
+2 6 2
+0 4 2
+0 2 3
+4 6 3
+1 3 3
+5 7 3
+2
+3
+4
+5
+0 
+7 
+6 
+1</pre></td><td><pre>0 6
+5 5
+4 4
+5 4
+device mesh not connected
+device mesh not connected
+device mesh not connected
+1 0
+no devices left
+</pre></td></tr></tbody></table><h3>Пример 3</h3><table class="sample-tests"><thead><tr><th>Ввод</th><th>Вывод</th></tr></thead><tbody><tr><td><pre>9 12
+0 1 1
+1 2 2
+2 5 3
+5 4 4
+4 3 5
+3 6 6
+6 7 7
+7 8 8
+0 3 1
+1 4 2
+4 7 10
+5 8 1
+3
+4
+5
+7
+1
+0
+2
+6
+8</pre></td><td><pre>4 10
+7 13
+7 15
+device mesh not connected
+device mesh not connected
+device mesh not connected
+device mesh not connected
+device mesh not connected
+8 0
+no devices left
+</pre></td></tr></tbody></table><h2>Примечания</h2><div class="notes"><p>ОБРАТИТЕ ВНИМАНИЕ, ЧТО ИЗ-ЗА ТЕХНИЧЕСКИХ ОСОБЕННОСТЕЙ ПУБЛИЧНЫЕ ТЕСТОВЫЕ КЕЙСЫ ВСЕГДА "OK", ОБЯЗАТЕЛЬНО ПРОВЕРЬТЕ ВАШЕ РЕШЕНИЕ ЛОКАЛЬНО!</p> 
+<p>откройте изображения в новой вкладке или скачайте</p> 
+<ol type="1"> 
+ <li></li> 
+</ol> 
+<p><img src="https://assets.contest.yandex.net/testsys/statement-file?hash=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..aNOyYNkvUc6BWUnV.lK9iZBiY0_hG_zqfj3suqAOuwdfYu2lCJ6SmQz_w1dbVTtEIdwiqMM1nDTRPPsWVrxHwwetwrVXrxks_KfwmrGx58YXElNMVPQnPFuCswBXpiMLCXzFAaIxgeyF3Fg.4M-e1wh6wavJ8Zd3H12q8g" alt="first test visual"> 2. <img src="https://assets.contest.yandex.net/testsys/statement-file?hash=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..w2URMO3pd3ETfmIm.eaBVFW5SHlJN2NSGiGsqM9ZCSrHlnRuJ5APY0l0QtmHUuipAn_aEyVa0SRDiMgL1eTAW4lDVOCwtMRyNqsOai5BuOlZw2K7DJ99u-ZWR-rZ7P_Ts92pYTyiXSG-QBA.PSC_PIEv6kP9bGzzLPqmAg" alt="second test visual"> 3. <img src="https://assets.contest.yandex.net/testsys/statement-file?hash=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..7x7eyMFeswGpq4li.57jmzwpxh4jcW-SwIB_po-Vkf6wVloqCpBEHzbzETjQ-pUJN5v2z5A4L_9ZG5Oc-Pr5E3tKZk2Onh39J5G0lVeafktWsoyn7fZ1MtCcyw1dIot_MTMtieZjCQq7P9A.hwCtMEz7Ut9bbaTvRWtLCQ" alt="third test visual"></p></div></div>
