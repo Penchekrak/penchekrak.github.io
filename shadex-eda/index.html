@@ -39,9 +39,11 @@
 </head>
 <body>
     <h1>Order Your Food</h1>
-    choose item
-    <button class="pizza" onclick="order('pizza')">🍕</button> <!-- Pizza emoji -->
-    <button class="burger" onclick="order('burger')">🍔</button> <!-- Burger emoji -->
+    <div id="food_type" style="display: block;">
+        choose item
+        <button class="pizza" onclick="order('pizza')">🍕</button> <!-- Pizza emoji -->
+        <button class="burger" onclick="order('burger')">🍔</button> <!-- Burger emoji -->
+    </div>
 
     <div id="options" style="display: none;">
         how would you like to receive your order?
@@ -49,8 +51,14 @@
         <button class="delivery" onclick="confirmOrder('delivery')">📦</button> <!-- Delivery emoji -->
     </div>
 
+    <div id="order_details" style="display: none;">
+        <p>Congratulations! Your order has been placed.</p>
+        <button onclick="window.location.reload()">New Order</button>
+    </div>
+
     <script>
         function order(foodType) {
+            document.getElementById('food_type').style.display = 'none';
             document.getElementById('options').style.display = 'block';
             window.currentFood = foodType; // Store the current food type
         }
@@ -63,6 +71,7 @@
             // alert(`You have chosen to order ${orderDetails.item} ${orderDetails.method}.`);
             console.log(JSON.stringify(orderDetails)); // Log the JSON object
             document.getElementById('options').style.display = 'none'; // Hide options after selection
+            document.getElementById('order_details').style.display = 'block'; // Show order details
         }
     </script>
 </body>
