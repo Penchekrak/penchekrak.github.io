@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>3D Avatars: reconstruction and generation of 3d human bodies and heads</h2>
+					<p>Andrei Spiridonov</p>
+				</section>
+				<section>
+					<section>
+						<h2>Why it is important?</h2>
+					</section>
+					<section>
+						<h3>Humanization of an AI</h3>
+						<div style="display: flex; justify-content: space-between;">
+							<video controls width="500" autoplay loop>
+								<source src="images/replika.mov" type="video/quicktime">
+							</video>
+							<video controls width="500" autoplay loop>
+								<source src="images/nomi.mov" type="video/quicktime">
+							</video>
+						</div>
+					</section>
+					<section>
+						<h3>Metaverse, gaming, virtual reality and telepresence</h3>
+						<div style="display: flex; justify-content: space-between;">
+							<img src="images/pokimane_vtube.jpeg" style="width: 50%;">
+							<img src="images/metaverse.webp" style="width: 50%;">
+						</div>
+					</section>
+					<section>
+						<h3>Animation, motion capture, and virtual try-on</h3>
+						<div style="display: flex; justify-content: space-between;">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Motion_Capture_with_Chad_Phantom.png/500px-Motion_Capture_with_Chad_Phantom.png" style="width: 50%;">
+							<img src="https://imageio.forbes.com/specials-images/imageserve/60a53427c26131a1df84b6ef/0x0.jpg" style="width: 50%;">
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Pose Estimation</h2>
+					</section>
+					<section>
+						<h3>Facial landmarks</h3>
+						<iframe src="https://mediapipe-facelandmark-demo.vercel.app?webcam=true" width="640" height="640" allow="camera *;"></iframe>
+					</section>
+					<section style="font-size: 0.4em;">
+						\[
+						\begin{bmatrix}
+							x_1 \\
+							x_2 \\
+							\vdots \\
+							x_n
+						\end{bmatrix} \text{ - array of detected 2d landmarks} \\
+						\begin{bmatrix}
+							y_1 \\
+							y_2 \\
+							\vdots \\
+							y_n
+						\end{bmatrix} \text{ - array of average 3d landmarks}
+						\] 
+						\[
+						T = \begin{bmatrix} R & t \\
+						0 & 1
+						\end{bmatrix} \text{or general affine - fitted transformation matrix}
+						\]
+						\[ \text{objective - }
+						\left\|\begin{bmatrix}
+							x_1 \\
+							x_2 \\
+							\vdots \\
+							x_n
+						\end{bmatrix} - T \begin{bmatrix}
+							y_1 \\
+							y_2 \\
+							\vdots \\
+							y_n
+						\end{bmatrix}
+						\right\|^2 \rightarrow \min_T
+						\]
+					</section>
+					<section>
+						<h3>Pose estimation</h3>
+						<div style="display: flex; justify-content: space-between;">
+							<img src="images/medium.png" style="width: 50%;">
+							<img src="images/footballer.png" style="width: 50%;">
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Parametric models</h2>
+					</section>
+					<section>
+						<h3>Blendshape models</h3>
+						<div style="display: flex; justify-content: space-between;">
+							<img src="https://faces.dmi.unibas.ch/bfm/content/basel_face_model/details//images/pc-shape.png" style="width: 50%;">
+							<img src="https://faces.dmi.unibas.ch/bfm/content/basel_face_model/details//images/pc-texture.png" style="width: 50%;">
+						</div>
+					</section>
+					<section style="font-size: 0.4em;">
+					<h3>Vertex Blending</h3>
+					\[ \mathbf{v} = \sum_{i=1}^n w_i \mathbf{v}_i \]
+					\[ \text{where } \mathbf{v} \text{ is the blended vertex, } \mathbf{v}_i \text{ are the vertices to blend, and } w_i \text{ are the weights.} \]
+					\[ \sum_{i=1}^n w_i = 1 \]
+					basis $\mathbf{v}_i$ is created from multiple scans using PCA
+					</section>
+					<section>
+						<h3>FLAME</h3>
+						<img src="images/FLAME.jpg" style="width: 50%;">
+						<ul>
+							<li>FLAME is a 3D morphable model of human faces</li>
+							<li>Has 4 joints: jaw, left and right eye, and mouth</li>
+							<li>Uses Linear Blend Skinning to accomodate joints</li>
+							<li>Vast data scan to fit the model</li>
+						</ul>
+					</section>
+					<section style="font-size: 0.4em;">
+						<h3></h3>Linear Blend Skinning</h3>
+						\[ \mathbf{v}_j = \sum_{i=1}^n w_{ij} T_i\mathbf{v}_{ij} \]
+						\[ \text{where } \mathbf{v}_j \text{ is the blended vertex, } T_i\mathbf{v}_{ij} \text{ are this vertex under rigid transforms from bones, and } w_{ij} \text{ are the weights.} \]
+						\[ \sum_{i=1}^n w_{ij} = 1 \]
+						<div style="display: flex; justify-content: space-between;">
+							<img src="images/skinning.jpeg" style="width: 33.33%; height: 33.33%;">
+							<img src="images/rigid_skinning.png" style="width: 33.33%; height: 33.33%;">
+							<img src="images/linear_blend_skinning.png" style="width: 33.33%; height: 33.33%;">
+						</div>
+					</section>
+					<section data-background-iframe="https://flame.is.tue.mpg.de/interactivemodelviewer.html"
+					data-background-interactive>
+					</section>
+					<section>
+						<h3>SMPL</h3>
+						<img src="images/SMPL.png" style="width: 50%;">
+						<img src="images/SMPLX.png" style="width: 45%;">
+					</section>
+					<section>
+						<h3>With Texture (MORF, Bashirov et. al.)</h3>
+							<img src="images/morf_model.png" style="width: 45%;">
+							<img src="images/morf_res.png" style="width: 45%;">
+					</section>
+					<section>
+						<h3>With Texture (ROME, Khakhulin et. al.)</h3>
+							<img src="images/rome_model.png" style="width: 45%;">
+							<img src="images/rome_res.png" style="width: 45%;">
+							<img src="images/rome_demo.png" style="width: 45%;">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>GAN-based models</h2>
+					</section>
+					<section>
+						<h3>EG3D</h3>
+						<img src="images/EG3D_model.png" style="width: 50%;">
+						<img src="images/EG3D_res.png" style="width: 50%;">
+					</section>
+					<section>
+						<h3>3DHumanGAN: 3D-Aware Human Image Generation with 3D Pose Mapping</h3>
+						<div>
+							<img src="images/3DHumanGAN.png" style="width: 50%;">
+							<video src="images/3d_human_videos/3039.mp4" controls autoplay style="width: 10%;"></video>
+							<video src="images/3d_human_videos/3047.mp4" controls autoplay style="width: 10%;"></video>
+							<video src="images/3d_human_videos/3099.mp4" controls autoplay style="width: 10%;"></video>
+							<video src="images/3d_human_videos/3131.mp4" controls autoplay style="width: 10%;"></video>
+						</div>
+					</section>
+				</section>
+				<section>
+					<h2>Thanks for your attention!</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<!-- <script src="plugin/markdown/markdown.js"></script> -->
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+	</body>
+</html>
