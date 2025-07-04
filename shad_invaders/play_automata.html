@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Shad Invaders</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="author" content="Penchekrak"/>
+		<style>
+		body {color:white;}
+		#info a {
+			color:#4d6675;
+		}
+		</style>
+	</head>
+	<body style="margin: 0;">
+		<script type="importmap">
+		{
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.178.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.178.0/examples/jsm/"
+            }
+		}
+		</script>
+
+		<script type="module">
+		import * as THREE from 'three';
+		import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+		let scene, camera, renderer;
+        let raycaster;
+        let control_ball, bone;
+        let control_ball_initial_position_ndc;
+        let canvas, ctx;
+        let ship = { x: 50, y: 10, width: 10, height: 10, speed: 5, bullets: [] };
+        let enemies = [];
+        const enemySpeed = 2;
+        let material;
+        let gameInitialized = false;
+		init();
+
+		async function init() {
+
+			scene = new THREE.Scene();
+			// scene.fog = new THREE.FogExp2( 0xffffff, .17 );
+			scene.background = new THREE.Color( 0xffffff );
+
+
+			const gltfLoader = new GLTFLoader();
+			const gltf = await gltfLoader.loadAsync( 
+                'play_automata2.glb',
+            );
+
+			scene.add( gltf.scene );
+            camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );// gltf.cameras[0];
+            
+            camera.position.set( gltf.cameras[0].position.x, gltf.cameras[0].position.y, gltf.cameras[0].position.z );
+            camera.rotation.set( gltf.cameras[0].rotation.x, gltf.cameras[0].rotation.y, gltf.cameras[0].rotation.z );
+            
+            // RectAreaLightUniformsLib.init();
+            // let rectLight = new THREE.RectAreaLight( 0xffffff, 10,  1, 1 );
+            // rectLight.position.set( gltf.cameras[0].position.x, gltf.cameras[0].position.y, gltf.cameras[0].position.z );
+            // rectLight.rotation.set( gltf.cameras[0].rotation.x, gltf.cameras[0].rotation.y, gltf.cameras[0].rotation.z );
+            // scene.add(rectLight);
+
+            scene.traverse( function ( object ) {
+                if ( object.name === 'LeftJoystickHead' ) {
+                    control_ball = object;
+                }
+                if ( object.name === 'Bone' ) {
+                    bone = object;
+                }
+            });
+            canvas = document.createElement('canvas');
+            canvas.width = 428;
+            canvas.height = 428;
+            ctx = canvas.getContext('2d');
+            console.log("Canvas created:", canvas.width, "x", canvas.height);
+            
+            // Initialize with a test pattern
+            ctx.fillStyle = 'red';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(10, 10, 50, 50);
+            ctx.fillStyle = 'red';
+            ctx.fillRect(100, 100, 50, 50);
+            
+            // // Create enemies
+            createEnemies();
+            
+            // Setup skinning and materials
+            scene.traverse(function(object) {
+                console.log("Traversing object:", object.name, object.type);
+                
+                if (object.name === 'Rubber_Sleeve001') {
+                    console.log("Found Rubber_Sleeve001");
+                    if (object.geometry && object.geometry.attributes._vertexweight) {
+                        for (let i = 0; i < object.geometry.attributes._vertexweight.count; i++) {
+                            object.geometry.attributes.skinWeight.setComponent(i, 0, object.geometry.attributes._vertexweight.getComponent(i, 0));
+                            object.geometry.attributes.skinIndex.setComponent(i, 0, 0);
+                            object.geometry.attributes.skinWeight.setComponent(i, 1, 1 - object.geometry.attributes._vertexweight.getComponent(i, 0));
+                            object.geometry.attributes.skinIndex.setComponent(i, 1, 1);
+                        }
+                        object.normalizeSkinWeights();
+                    }
+                }
+                
+                if (object.name === 'Plane') {
+                    console.log("Found Plane object, applying canvas texture");
+                    material = new THREE.MeshBasicMaterial();
+                    material.map = new THREE.CanvasTexture(canvas);
+                    material.map.needsUpdate = true;
+                    object.material = material;
+                    console.log("Material applied to Plane");
+                    gameInitialized = true;
+                }
+            });
+
+            // var img = new Image();
+            // img.src = 'arcade_recon/dollar.jpg';
+            // img.onload = () => {
+            //     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            //     material.map.needsUpdate = true;
+            // }
+
+            // camera.updateProjectionMatrix();
+            camera.getWorldPosition(new THREE.Vector3());
+            // bone.updateMatrixWorld();
+            let position = new THREE.Vector3();
+            let projection = bone.getWorldPosition(position).project(camera)
+            control_ball_initial_position_ndc = new THREE.Vector2(projection.x, projection.y);
+            console.log("projection", projection, "control_ball_initial_position_ndc", control_ball_initial_position_ndc)
+
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( animate );
+			document.body.appendChild( renderer.domElement );
+
+			window.addEventListener( 'resize', onWindowResize, false );
+            renderer.domElement.addEventListener('pointerdown', onClick, false);
+            renderer.domElement.addEventListener('pointermove', onMouseMove);
+            renderer.domElement.addEventListener('pointerup', onMouseUp);
+            raycaster = new THREE.Raycaster();
+            
+            console.log("Initialization complete");
+		}
+
+        function createEnemies() {
+            enemies = [];
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 3; j++) {
+                    enemies.push({ 
+                        x: i * 50 + 50, 
+                        y: j * 40 + 300, 
+                        width: 30, 
+                        height: 25 
+                    });
+                }
+            }
+            console.log("Created", enemies.length, "enemies");
+        }
+
+        function gameLoop() {
+            if (!gameInitialized || !ctx) return;
+            
+            // Clear canvas with black background
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Move ship
+            if (ship.movingLeft && ship.x > 0) ship.x -= ship.speed;
+            if (ship.movingRight && ship.x < canvas.width - ship.width) ship.x += ship.speed;
+            
+            // Draw ship
+            ctx.fillStyle = 'white';
+            ctx.fillRect(ship.x, ship.y, ship.width, ship.height);
+
+            // Draw bullets
+            for (let i = ship.bullets.length - 1; i >= 0; i--) {
+                const bullet = ship.bullets[i];
+                bullet.y += bullet.speed;
+                ctx.fillStyle = 'yellow';
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+
+                if (bullet.y < -bullet.height) {
+                    ship.bullets.splice(i, 1);
+                }
+            }
+
+            // Draw enemies
+            ctx.fillStyle = 'red';
+            for (const enemy of enemies) {
+                enemy.y -= enemySpeed;
+                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+            }
+
+            // Collision detection
+            for (let i = ship.bullets.length - 1; i >= 0; i--) {
+                for (let j = enemies.length - 1; j >= 0; j--) {
+                    const bullet = ship.bullets[i];
+                    const enemy = enemies[j];
+
+                    if (bullet.x < enemy.x + enemy.width &&
+                        bullet.x + bullet.width > enemy.x &&
+                        bullet.y < enemy.y + enemy.height &&
+                        bullet.y + bullet.height > enemy.y) {
+                        ship.bullets.splice(i, 1);
+                        enemies.splice(j, 1);
+                        // Add camera shake on impact
+                        const shakeIntensity = 0.001;
+                        const shakeDuration = 100; // in milliseconds
+                        const originalPosition = camera.position.clone();
+                        const originalRotation = camera.rotation.clone();
+
+                        const shakeCamera = () => {
+                            camera.position.x += (Math.random() - 0.5) * shakeIntensity;
+                            camera.position.y += (Math.random() - 0.5) * shakeIntensity;
+                            camera.position.z += (Math.random() - 0.5) * shakeIntensity;
+                            camera.rotation.x += (Math.random() - 0.5) * shakeIntensity;
+                            camera.rotation.y += (Math.random() - 0.5) * shakeIntensity;
+                            camera.rotation.z += (Math.random() - 0.5) * shakeIntensity;
+                            camera.updateProjectionMatrix();
+                        };
+
+                        const resetCamera = () => {
+                            camera.position.copy(originalPosition);
+                            camera.rotation.copy(originalRotation);
+                            camera.updateProjectionMatrix();
+                        };
+
+                        // Start shaking the camera
+                        const shakeInterval = setInterval(shakeCamera, 10);
+
+                        // Stop shaking the camera after the shake duration
+                        setTimeout(() => {
+                            clearInterval(shakeInterval);
+                            resetCamera();
+                        }, shakeDuration);
+                        break;
+                    }
+                }
+            }
+
+            // Respawn enemies if all destroyed
+            if (enemies.length === 0) {
+                createEnemies();
+            }
+            
+            // Auto-shoot
+            if (Math.random() < 0.3) { // 5% chance per frame
+                console.log("shooting bullet")
+                ship.bullets.push({ 
+                    x: ship.x + ship.width / 2 - 2, 
+                    y: ship.y, 
+                    width: 4, 
+                    height: 10, 
+                    speed: 7 
+                });
+            }
+        }
+
+		function animate( ) {
+            // ship.bullets.push({ x: ship.x + ship.width / 2, y: ship.y, width: 5, height: 10, speed: 5 });
+            gameLoop();
+            material.map.needsUpdate = true;
+            renderer.render( scene, camera );
+		}
+
+		
+
+		function onWindowResize() {
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+		}
+
+        let isDragging = false;
+
+        function onClick(event) {
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            console.log("intersects", intersects)
+            if (intersects.length > 0) {
+                if (intersects[0].object === control_ball) {
+                    isDragging = true;
+                    // console.log("mouse when clicked on control ball", mouse)
+                }
+            }
+        }
+
+        function onMouseMove(event) {
+            if (isDragging) {
+                const mouse = new THREE.Vector2();
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                console.log("mouse when dragging", mouse)
+                const direction = mouse.sub(control_ball_initial_position_ndc).normalize();
+                const rotationAngle = -Math.atan2(direction.x, direction.y);
+                bone.rotation.z = Math.min(Math.max(rotationAngle, -Math.PI/6), Math.PI/6);
+                if (bone.rotation.z > 0) {
+                    ship.movingLeft = true;
+                    ship.movingRight = false;
+                } else {
+                    ship.movingRight = true;
+                    ship.movingLeft = false;
+                }
+                control_ball.updateMatrixWorld();
+            }
+        }
+
+        function onMouseUp(event) {
+            isDragging = false;
+            bone.rotation.z = 0;
+            control_ball.updateMatrixWorld();
+            ship.movingLeft = false;
+            ship.movingRight = false;
+        }
+
+
+		</script>
+	</body>
+</html>
