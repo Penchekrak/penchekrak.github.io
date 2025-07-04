@@ -26,302 +26,614 @@
 		import * as THREE from 'three';
 		import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
         import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
-		let scene, camera, renderer;
-        let raycaster;
-        let control_ball, bone;
-        let control_ball_initial_position_ndc;
-        let canvas, ctx;
-        let ship = { x: 50, y: 10, width: 10, height: 10, speed: 5, bullets: [] };
-        let enemies = [];
-        const enemySpeed = 2;
-        let material;
-        let gameInitialized = false;
-		init();
+		import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+		import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+		import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 
-		async function init() {
+		// Configuration
+		const CONFIG = {
+			canvas: { width: 428, height: 428 },
+			ship: { x: 50, y: 10, width: 10, height: 10, speed: 5 },
+			enemy: { speed: 2, rows: 3, cols: 5, width: 30, height: 25 },
+			bullet: { width: 4, height: 10, speed: 7 },
+			camera: { fov: 50, near: 0.1, far: 1000 },
+			effects: { shakeIntensity: 0.001, shakeDuration: 100 },
+			gameplay: { autoShootChance: 0.3, joystickMaxRotation: Math.PI/6 }
+		};
 
-			scene = new THREE.Scene();
-			// scene.fog = new THREE.FogExp2( 0xffffff, .17 );
-			scene.background = new THREE.Color( 0xffffff );
+		// Game State Management
+		class GameState {
+			constructor() {
+				this.ship = { 
+					...CONFIG.ship, 
+					bullets: [], 
+					movingLeft: false, 
+					movingRight: false 
+				};
+				this.enemies = [];
+				this.initialized = false;
+			}
 
+			reset() {
+				this.ship.bullets = [];
+				this.enemies = [];
+				this.createEnemies();
+			}
 
-			const gltfLoader = new GLTFLoader();
-			const gltf = await gltfLoader.loadAsync( 
-                'play_automata.glb',
-            );
+			createEnemies() {
+				this.enemies = [];
+				for (let i = 0; i < CONFIG.enemy.cols; i++) {
+					for (let j = 0; j < CONFIG.enemy.rows; j++) {
+						this.enemies.push({ 
+							x: i * 50 + 50, 
+							y: j * 40 + 300, 
+							width: CONFIG.enemy.width, 
+							height: CONFIG.enemy.height 
+						});
+					}
+				}
+			}
 
-			scene.add( gltf.scene );
-            camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );// gltf.cameras[0];
-            
-            camera.position.set( gltf.cameras[0].position.x, gltf.cameras[0].position.y, gltf.cameras[0].position.z );
-            camera.rotation.set( gltf.cameras[0].rotation.x, gltf.cameras[0].rotation.y, gltf.cameras[0].rotation.z );
-            
-            // RectAreaLightUniformsLib.init();
-            // let rectLight = new THREE.RectAreaLight( 0xffffff, 10,  1, 1 );
-            // rectLight.position.set( gltf.cameras[0].position.x, gltf.cameras[0].position.y, gltf.cameras[0].position.z );
-            // rectLight.rotation.set( gltf.cameras[0].rotation.x, gltf.cameras[0].rotation.y, gltf.cameras[0].rotation.z );
-            // scene.add(rectLight);
+			updateShip() {
+				if (this.ship.movingLeft && this.ship.x > 0) {
+					this.ship.x -= this.ship.speed;
+				}
+				if (this.ship.movingRight && this.ship.x < CONFIG.canvas.width - this.ship.width) {
+					this.ship.x += this.ship.speed;
+				}
+			}
 
-            scene.traverse( function ( object ) {
-                if ( object.name === 'LeftJoystickHead' ) {
-                    control_ball = object;
-                }
-                if ( object.name === 'Bone' ) {
-                    bone = object;
-                }
-            });
-            canvas = document.createElement('canvas');
-            canvas.width = 428;
-            canvas.height = 428;
-            ctx = canvas.getContext('2d');
-            console.log("Canvas created:", canvas.width, "x", canvas.height);
-            
-            // Initialize with a test pattern
-            ctx.fillStyle = 'red';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'white';
-            ctx.fillRect(10, 10, 50, 50);
-            ctx.fillStyle = 'red';
-            ctx.fillRect(100, 100, 50, 50);
-            
-            // // Create enemies
-            createEnemies();
-            
-            // Setup skinning and materials
-            scene.traverse(function(object) {
-                console.log("Traversing object:", object.name, object.type);
-                
-                if (object.name === 'Rubber_Sleeve001') {
-                    console.log("Found Rubber_Sleeve001");
-                    if (object.geometry && object.geometry.attributes._vertexweight) {
-                        for (let i = 0; i < object.geometry.attributes._vertexweight.count; i++) {
-                            object.geometry.attributes.skinWeight.setComponent(i, 0, object.geometry.attributes._vertexweight.getComponent(i, 0));
-                            object.geometry.attributes.skinIndex.setComponent(i, 0, 0);
-                            object.geometry.attributes.skinWeight.setComponent(i, 1, 1 - object.geometry.attributes._vertexweight.getComponent(i, 0));
-                            object.geometry.attributes.skinIndex.setComponent(i, 1, 1);
-                        }
-                        object.normalizeSkinWeights();
-                    }
-                }
-                
-                if (object.name === 'Plane') {
-                    console.log("Found Plane object, applying canvas texture");
-                    material = new THREE.MeshBasicMaterial();
-                    material.map = new THREE.CanvasTexture(canvas);
-                    material.map.needsUpdate = true;
-                    object.material = material;
-                    console.log("Material applied to Plane");
-                    gameInitialized = true;
-                }
-            });
+			updateBullets() {
+				for (let i = this.ship.bullets.length - 1; i >= 0; i--) {
+					const bullet = this.ship.bullets[i];
+					bullet.y += bullet.speed;
+					
+					if (bullet.y < -bullet.height) {
+						this.ship.bullets.splice(i, 1);
+					}
+				}
+			}
 
-            // var img = new Image();
-            // img.src = 'arcade_recon/dollar.jpg';
-            // img.onload = () => {
-            //     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            //     material.map.needsUpdate = true;
-            // }
+			updateEnemies() {
+				for (const enemy of this.enemies) {
+					enemy.y -= CONFIG.enemy.speed;
+				}
+			}
 
-            // camera.updateProjectionMatrix();
-            camera.getWorldPosition(new THREE.Vector3());
-            // bone.updateMatrixWorld();
-            let position = new THREE.Vector3();
-            let projection = bone.getWorldPosition(position).project(camera)
-            control_ball_initial_position_ndc = new THREE.Vector2(projection.x, projection.y);
-            console.log("projection", projection, "control_ball_initial_position_ndc", control_ball_initial_position_ndc)
-
-			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			renderer.setPixelRatio( window.devicePixelRatio );
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			renderer.setAnimationLoop( animate );
-			document.body.appendChild( renderer.domElement );
-
-			window.addEventListener( 'resize', onWindowResize, false );
-            renderer.domElement.addEventListener('pointerdown', onClick, false);
-            renderer.domElement.addEventListener('pointermove', onMouseMove);
-            renderer.domElement.addEventListener('pointerup', onMouseUp);
-            raycaster = new THREE.Raycaster();
-            
-            console.log("Initialization complete");
+			addBullet() {
+				this.ship.bullets.push({ 
+					x: this.ship.x + this.ship.width / 2 - CONFIG.bullet.width / 2, 
+					y: this.ship.y, 
+					width: CONFIG.bullet.width, 
+					height: CONFIG.bullet.height, 
+					speed: CONFIG.bullet.speed 
+				});
+			}
 		}
 
-        function createEnemies() {
-            enemies = [];
-            for (let i = 0; i < 5; i++) {
-                for (let j = 0; j < 3; j++) {
-                    enemies.push({ 
-                        x: i * 50 + 50, 
-                        y: j * 40 + 300, 
-                        width: 30, 
-                        height: 25 
-                    });
-                }
-            }
-            console.log("Created", enemies.length, "enemies");
-        }
+		// Canvas Rendering (moved up to be available for SceneManager)
+		class CanvasRenderer {
+			constructor() {
+				this.canvas = document.createElement('canvas');
+				this.canvas.width = CONFIG.canvas.width;
+				this.canvas.height = CONFIG.canvas.height;
+				this.ctx = this.canvas.getContext('2d');
+			}
 
-        function gameLoop() {
-            if (!gameInitialized || !ctx) return;
-            
-            // Clear canvas with black background
-            ctx.fillStyle = 'black';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Move ship
-            if (ship.movingLeft && ship.x > 0) ship.x -= ship.speed;
-            if (ship.movingRight && ship.x < canvas.width - ship.width) ship.x += ship.speed;
-            
-            // Draw ship
-            ctx.fillStyle = 'white';
-            ctx.fillRect(ship.x, ship.y, ship.width, ship.height);
+			clear() {
+				this.ctx.fillStyle = 'black';
+				this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			}
 
-            // Draw bullets
-            for (let i = ship.bullets.length - 1; i >= 0; i--) {
-                const bullet = ship.bullets[i];
-                bullet.y += bullet.speed;
-                ctx.fillStyle = 'yellow';
-                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+			drawShip(ship) {
+				this.ctx.fillStyle = 'white';
+				this.ctx.fillRect(ship.x, ship.y, ship.width, ship.height);
+			}
 
-                if (bullet.y < -bullet.height) {
-                    ship.bullets.splice(i, 1);
-                }
-            }
+			drawBullets(bullets) {
+				this.ctx.fillStyle = 'yellow';
+				for (const bullet of bullets) {
+					this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+				}
+			}
 
-            // Draw enemies
-            ctx.fillStyle = 'red';
-            for (const enemy of enemies) {
-                enemy.y -= enemySpeed;
-                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
-            }
+			drawEnemies(enemies) {
+				this.ctx.fillStyle = 'red';
+				for (const enemy of enemies) {
+					this.ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+				}
+			}
 
-            // Collision detection
-            for (let i = ship.bullets.length - 1; i >= 0; i--) {
-                for (let j = enemies.length - 1; j >= 0; j--) {
-                    const bullet = ship.bullets[i];
-                    const enemy = enemies[j];
+			render(gameState) {
+				this.clear();
+				this.drawShip(gameState.ship);
+				this.drawBullets(gameState.ship.bullets);
+				this.drawEnemies(gameState.enemies);
+			}
+		}
 
-                    if (bullet.x < enemy.x + enemy.width &&
-                        bullet.x + bullet.width > enemy.x &&
-                        bullet.y < enemy.y + enemy.height &&
-                        bullet.y + bullet.height > enemy.y) {
-                        ship.bullets.splice(i, 1);
-                        enemies.splice(j, 1);
-                        // Add camera shake on impact
-                        const shakeIntensity = 0.001;
-                        const shakeDuration = 100; // in milliseconds
-                        const originalPosition = camera.position.clone();
-                        const originalRotation = camera.rotation.clone();
+		// Three.js Scene Management
+		class SceneManager {
+			constructor(canvasRenderer) {
+				this.scene = null;
+				this.camera = null;
+				this.renderer = null;
+				this.composer = null;
+				this.outlinePass = null;
+				this.bodyMesh = null;
+				this.raycaster = new THREE.Raycaster();
+				this.controlBall = null;
+				this.bone = null;
+				this.controlBallInitialNDC = null;
+				this.canvasTexture = null;
+				this.canvasRenderer = canvasRenderer;
+			}
 
-                        const shakeCamera = () => {
-                            camera.position.x += (Math.random() - 0.5) * shakeIntensity;
-                            camera.position.y += (Math.random() - 0.5) * shakeIntensity;
-                            camera.position.z += (Math.random() - 0.5) * shakeIntensity;
-                            camera.rotation.x += (Math.random() - 0.5) * shakeIntensity;
-                            camera.rotation.y += (Math.random() - 0.5) * shakeIntensity;
-                            camera.rotation.z += (Math.random() - 0.5) * shakeIntensity;
-                            camera.updateProjectionMatrix();
-                        };
+			async initialize() {
+				this.setupScene();
+				await this.loadModel();
+				this.setupRenderer();
+				this.setupPostProcessing();
+				this.setupEventListeners();
+				return this;
+			}
 
-                        const resetCamera = () => {
-                            camera.position.copy(originalPosition);
-                            camera.rotation.copy(originalRotation);
-                            camera.updateProjectionMatrix();
-                        };
+			setupScene() {
+				this.scene = new THREE.Scene();
+				this.scene.background = new THREE.Color(0xffffff);
+				
+				this.camera = new THREE.PerspectiveCamera(
+					CONFIG.camera.fov, 
+					window.innerWidth / window.innerHeight, 
+					CONFIG.camera.near, 
+					CONFIG.camera.far
+				);
+			}
 
-                        // Start shaking the camera
-                        const shakeInterval = setInterval(shakeCamera, 10);
+			async loadModel() {
+				const gltfLoader = new GLTFLoader();
+				const gltf = await gltfLoader.loadAsync('play_automata2.glb');
+				
+				this.scene.add(gltf.scene);
+                this.setupLights();
+				this.setupCameraFromGLTF(gltf);
+				this.findControlObjects();
+				this.setupMaterials();
+				
+				return gltf;
+			}
 
-                        // Stop shaking the camera after the shake duration
-                        setTimeout(() => {
-                            clearInterval(shakeInterval);
-                            resetCamera();
-                        }, shakeDuration);
-                        break;
+			setupCameraFromGLTF(gltf) {
+				const gltfCamera = gltf.cameras[0];
+				this.camera = gltfCamera;
+			}
+
+            setupLights() {
+                const light = new THREE.AmbientLight(0xffffff, 3);
+                this.scene.add(light);
+                this.scene.traverse((object) => {
+                    if (object.name === 'area_light') {
+                        const position = object.position;
+                        const rotation = object.rotation;
+                        const areaLight = new THREE.RectAreaLight(0xffffff, 3, 3, 3);
+                        areaLight.position.copy(position);
+                        areaLight.rotation.set(rotation.z, rotation.y, rotation.x);
+                        areaLight.updateMatrixWorld();
+                        this.scene.add(areaLight);
                     }
-                }
-            }
-
-            // Respawn enemies if all destroyed
-            if (enemies.length === 0) {
-                createEnemies();
-            }
-            
-            // Auto-shoot
-            if (Math.random() < 0.3) { // 5% chance per frame
-                console.log("shooting bullet")
-                ship.bullets.push({ 
-                    x: ship.x + ship.width / 2 - 2, 
-                    y: ship.y, 
-                    width: 4, 
-                    height: 10, 
-                    speed: 7 
                 });
             }
-        }
 
-		function animate( ) {
-            // ship.bullets.push({ x: ship.x + ship.width / 2, y: ship.y, width: 5, height: 10, speed: 5 });
-            gameLoop();
-            material.map.needsUpdate = true;
-            renderer.render( scene, camera );
+			findControlObjects() {
+				this.scene.traverse((object) => {
+					if (object.name === 'LeftJoystickHead') {
+						this.controlBall = object;
+					}
+					if (object.name === 'Bone') {
+						this.bone = object;
+					}
+					if (object.name === 'lower_body') {
+						this.bodyMesh = object;
+					}
+                    if (object.name === 'upper_body') {
+                        this.upperBodyMesh = object;
+                    }
+				});
+
+				if (this.bone) {
+					const position = new THREE.Vector3();
+					const projection = this.bone.getWorldPosition(position).project(this.camera);
+					this.controlBallInitialNDC = new THREE.Vector2(projection.x, projection.y);
+				}
+			}
+
+			setupMaterials() {
+				this.scene.traverse((object) => {
+					if (object.name === 'Rubber_Sleeve001') {
+						this.setupSkinning(object);
+					}
+					
+					if (object.name === 'screen_surface') {
+						this.setupCanvasTexture(object);
+					}
+				});
+			}
+
+			setupSkinning(object) {
+				if (object.geometry?.attributes._vertexweight) {
+					const weightAttr = object.geometry.attributes._vertexweight;
+					for (let i = 0; i < weightAttr.count; i++) {
+						const weight = weightAttr.getComponent(i, 0);
+						object.geometry.attributes.skinWeight.setComponent(i, 0, weight);
+						object.geometry.attributes.skinIndex.setComponent(i, 0, 0);
+						object.geometry.attributes.skinWeight.setComponent(i, 1, 1 - weight);
+						object.geometry.attributes.skinIndex.setComponent(i, 1, 1);
+					}
+					object.normalizeSkinWeights();
+				}
+			}
+
+			setupCanvasTexture(object) {
+				const material = new THREE.MeshPhongMaterial();
+				this.canvasTexture = new THREE.CanvasTexture(this.canvasRenderer.canvas);
+				material.map = this.canvasTexture;
+                material.emissiveMap = this.canvasTexture;
+                material.emissiveIntensity = 10;
+				object.material = material;
+			}
+
+			setupRenderer() {
+				this.renderer = new THREE.WebGLRenderer({ antialias: true });
+				this.renderer.setPixelRatio(window.devicePixelRatio);
+				this.renderer.setSize(window.innerWidth, window.innerHeight);
+				document.body.appendChild(this.renderer.domElement);
+			}
+
+			setupPostProcessing() {
+				this.composer = new EffectComposer(this.renderer);
+
+				const renderPass = new RenderPass(this.scene, this.camera);
+				this.composer.addPass(renderPass);
+
+				this.outlinePass = new OutlinePass(
+					new THREE.Vector2(window.innerWidth, window.innerHeight),
+					this.scene,
+					this.camera
+				);
+
+                const outlinePassSettings = {
+                    edgeStrength: 10.0,
+                    edgeGlow: 0.0,
+                    edgeThickness: 2.0,
+                    pulsePeriod: 0,
+                    visibleEdgeColor: '#000000',
+                    hiddenEdgeColor: '#ffffff',
+                    overlayMaterial: {
+                        premultipliedAlpha: true,
+                        blending: THREE.MultiplyBlending
+                    }
+                };
+
+                Object.keys(outlinePassSettings).forEach(key => {
+                    if (key === 'visibleEdgeColor' || key === 'hiddenEdgeColor') {
+                        this.outlinePass[key].set(outlinePassSettings[key]);
+                    } else if (key === 'overlayMaterial') {
+                        Object.keys(outlinePassSettings[key]).forEach(subKey => {
+                            this.outlinePass[key][subKey] = outlinePassSettings[key][subKey];
+                        });
+                    } else {
+                        this.outlinePass[key] = outlinePassSettings[key];
+                    }
+                });
+
+				if (this.bodyMesh) {
+					this.outlinePass.selectedObjects = [this.bodyMesh];
+				}
+
+				this.composer.addPass(this.outlinePass);
+
+                this.outlinePass2 = new OutlinePass(
+                    new THREE.Vector2(window.innerWidth, window.innerHeight),
+                    this.scene,
+                    this.camera
+                );
+
+                const outlinePassSettings2 = {
+                    edgeStrength: 10.0,
+                    edgeGlow: 0.0,
+                    edgeThickness: 2.0,
+                    pulsePeriod: 0,
+                    visibleEdgeColor: '#000000',
+                    hiddenEdgeColor: '#000000',
+                    overlayMaterial: {
+                        premultipliedAlpha: false,
+                        blending: THREE.NormalBlending
+                    }
+                };
+
+                Object.keys(outlinePassSettings2).forEach(key => {
+                    if (key === 'visibleEdgeColor' || key === 'hiddenEdgeColor') {
+                        this.outlinePass2[key].set(outlinePassSettings2[key]);
+                    } else if (key === 'overlayMaterial') {
+                        Object.keys(outlinePassSettings2[key]).forEach(subKey => {
+                            this.outlinePass2[key][subKey] = outlinePassSettings2[key][subKey];
+                        });
+                    } else {
+                        this.outlinePass2[key] = outlinePassSettings2[key];
+                    }
+                });
+                
+                if (this.upperBodyMesh) {
+					this.outlinePass2.selectedObjects = [this.upperBodyMesh];
+				}
+
+                this.composer.addPass(this.outlinePass2);
+			}
+
+			setupEventListeners() {
+				window.addEventListener('resize', () => this.onWindowResize(), false);
+			}
+
+			onWindowResize() {
+				this.camera.aspect = window.innerWidth / window.innerHeight;
+				this.camera.updateProjectionMatrix();
+				this.renderer.setSize(window.innerWidth, window.innerHeight);
+				
+				if (this.composer) {
+					this.composer.setSize(window.innerWidth, window.innerHeight);
+				}
+			}
+
+			updateCanvasTexture() {
+				if (this.canvasTexture) {
+					this.canvasTexture.needsUpdate = true;
+				}
+			}
+
+			render() {
+				if (this.composer) {
+					this.composer.render();
+				} else {
+					this.renderer.render(this.scene, this.camera);
+				}
+			}
+
+			getMouseNDC(event) {
+				return new THREE.Vector2(
+					(event.clientX / window.innerWidth) * 2 - 1,
+					-(event.clientY / window.innerHeight) * 2 + 1
+				);
+			}
+
+			raycastFromMouse(mouseNDC) {
+				this.raycaster.setFromCamera(mouseNDC, this.camera);
+				return this.raycaster.intersectObjects(this.scene.children, true);
+			}
 		}
 
-		
+		// Input Handling
+		class InputHandler {
+			constructor(sceneManager, gameState) {
+				this.sceneManager = sceneManager;
+				this.gameState = gameState;
+				this.isDragging = false;
+				this.setupEventListeners();
+			}
 
-		function onWindowResize() {
+			setupEventListeners() {
+				const canvas = this.sceneManager.renderer.domElement;
+				canvas.addEventListener('pointerdown', (e) => this.onPointerDown(e));
+				canvas.addEventListener('pointermove', (e) => this.onPointerMove(e));
+				canvas.addEventListener('pointerup', (e) => this.onPointerUp(e));
+				window.addEventListener('keydown', (e) => this.onKeyDown(e));
+				window.addEventListener('keyup', (e) => this.onKeyUp(e));
+			}
 
-			camera.aspect = window.innerWidth / window.innerHeight;
-			camera.updateProjectionMatrix();
+			onPointerDown(event) {
+				const mouseNDC = this.sceneManager.getMouseNDC(event);
+				const intersects = this.sceneManager.raycastFromMouse(mouseNDC);
+				
+				if (intersects.length > 0 && intersects[0].object === this.sceneManager.controlBall) {
+					this.isDragging = true;
+				}
+			}
 
-			renderer.setSize( window.innerWidth, window.innerHeight );
+			onPointerMove(event) {
+				if (!this.isDragging) return;
 
+				const mouseNDC = this.sceneManager.getMouseNDC(event);
+				const direction = mouseNDC.sub(this.sceneManager.controlBallInitialNDC).normalize();
+				const rotationAngle = -Math.atan2(direction.x, direction.y);
+				
+				this.sceneManager.bone.rotation.z = Math.min(
+					Math.max(rotationAngle, -CONFIG.gameplay.joystickMaxRotation), 
+					CONFIG.gameplay.joystickMaxRotation
+				);
+
+				this.gameState.ship.movingLeft = this.sceneManager.bone.rotation.z > 0;
+				this.gameState.ship.movingRight = this.sceneManager.bone.rotation.z < 0;
+				
+				this.sceneManager.controlBall.updateMatrixWorld();
+			}
+
+			onPointerUp(event) {
+				this.isDragging = false;
+				this.resetJoystick();
+			}
+            
+            onKeyDown(event) {
+                console.log("keydown", event.key);
+                if (event.key === "ArrowLeft") {
+                    this.sceneManager.bone.rotation.z = CONFIG.gameplay.joystickMaxRotation;
+                    this.gameState.ship.movingLeft = true;
+                    this.gameState.ship.movingRight = false;
+                    this.sceneManager.controlBall.updateMatrixWorld();
+                } else if (event.key === "ArrowRight") {
+                    this.sceneManager.bone.rotation.z = -CONFIG.gameplay.joystickMaxRotation;
+                    this.gameState.ship.movingRight = true;
+                    this.gameState.ship.movingLeft = false;
+                    this.sceneManager.controlBall.updateMatrixWorld();
+                }
+            }
+
+            onKeyUp(event) {
+                if (event.key === "ArrowLeft") {
+                    this.resetJoystick();
+                } else if (event.key === "ArrowRight") {
+                    this.resetJoystick();
+                }
+            }
+
+            resetJoystick() {
+                this.sceneManager.bone.rotation.z = 0;
+                this.gameState.ship.movingLeft = false;
+                this.gameState.ship.movingRight = false;
+                this.sceneManager.controlBall.updateMatrixWorld();
+            }
 		}
 
-        let isDragging = false;
+		// Effects Management
+		class EffectsManager {
+			constructor(sceneManager) {
+				this.sceneManager = sceneManager;
+			}
 
-        function onClick(event) {
-            const mouse = new THREE.Vector2();
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(scene.children, true);
-            console.log("intersects", intersects)
-            if (intersects.length > 0) {
-                if (intersects[0].object === control_ball) {
-                    isDragging = true;
-                    // console.log("mouse when clicked on control ball", mouse)
-                }
-            }
-        }
+			triggerCameraShake() {
+				const originalPosition = this.sceneManager.camera.position.clone();
+				const originalRotation = this.sceneManager.camera.rotation.clone();
 
-        function onMouseMove(event) {
-            if (isDragging) {
-                const mouse = new THREE.Vector2();
-                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-                console.log("mouse when dragging", mouse)
-                const direction = mouse.sub(control_ball_initial_position_ndc).normalize();
-                const rotationAngle = -Math.atan2(direction.x, direction.y);
-                bone.rotation.z = Math.min(Math.max(rotationAngle, -Math.PI/6), Math.PI/6);
-                if (bone.rotation.z > 0) {
-                    ship.movingLeft = true;
-                    ship.movingRight = false;
-                } else {
-                    ship.movingRight = true;
-                    ship.movingLeft = false;
-                }
-                control_ball.updateMatrixWorld();
-            }
-        }
+				const shakeCamera = () => {
+					this.sceneManager.camera.position.x += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
+					this.sceneManager.camera.position.y += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
+					this.sceneManager.camera.position.z += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
+					this.sceneManager.camera.rotation.x += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
+					this.sceneManager.camera.rotation.y += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
+					this.sceneManager.camera.rotation.z += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
+					this.sceneManager.camera.updateProjectionMatrix();
+				};
 
-        function onMouseUp(event) {
-            isDragging = false;
-            bone.rotation.z = 0;
-            control_ball.updateMatrixWorld();
-            ship.movingLeft = false;
-            ship.movingRight = false;
-        }
+				const resetCamera = () => {
+					this.sceneManager.camera.position.copy(originalPosition);
+					this.sceneManager.camera.rotation.copy(originalRotation);
+					this.sceneManager.camera.updateProjectionMatrix();
+				};
 
+				const shakeInterval = setInterval(shakeCamera, 10);
+				setTimeout(() => {
+					clearInterval(shakeInterval);
+					resetCamera();
+				}, CONFIG.effects.shakeDuration);
+			}
+		}
+
+		// Game Logic
+		class GameLogic {
+			constructor(gameState, effectsManager) {
+				this.gameState = gameState;
+				this.effectsManager = effectsManager;
+			}
+
+			checkCollisions() {
+				for (let i = this.gameState.ship.bullets.length - 1; i >= 0; i--) {
+					for (let j = this.gameState.enemies.length - 1; j >= 0; j--) {
+						if (this.isColliding(this.gameState.ship.bullets[i], this.gameState.enemies[j])) {
+							this.gameState.ship.bullets.splice(i, 1);
+							this.gameState.enemies.splice(j, 1);
+							this.effectsManager.triggerCameraShake();
+							break;
+						}
+					}
+				}
+			}
+
+			isColliding(rect1, rect2) {
+				return rect1.x < rect2.x + rect2.width &&
+					   rect1.x + rect1.width > rect2.x &&
+					   rect1.y < rect2.y + rect2.height &&
+					   rect1.y + rect1.height > rect2.y;
+			}
+
+			handleAutoShooting() {
+				if (Math.random() < CONFIG.gameplay.autoShootChance) {
+					this.gameState.addBullet();
+				}
+			}
+
+			update() {
+				this.gameState.updateShip();
+				this.gameState.updateBullets();
+				this.gameState.updateEnemies();
+				this.checkCollisions();
+				this.handleAutoShooting();
+
+				if (this.gameState.enemies.length === 0) {
+					this.gameState.createEnemies();
+				}
+			}
+		}
+
+		// Main Application
+		class ShadInvaders {
+			constructor() {
+				this.gameState = new GameState();
+				this.canvasRenderer = new CanvasRenderer();
+				this.sceneManager = new SceneManager(this.canvasRenderer);
+				this.inputHandler = null;
+				this.effectsManager = null;
+				this.gameLogic = null;
+			}
+
+			async initialize() {
+				await this.sceneManager.initialize();
+				
+				this.effectsManager = new EffectsManager(this.sceneManager);
+				this.inputHandler = new InputHandler(this.sceneManager, this.gameState);
+				this.gameLogic = new GameLogic(this.gameState, this.effectsManager);
+				
+				this.gameState.createEnemies();
+				this.gameState.initialized = true;
+				
+				this.sceneManager.renderer.setAnimationLoop(() => this.animate());
+			}
+
+			animate() {
+				if (!this.gameState.initialized) return;
+				
+				this.gameLogic.update();
+				this.canvasRenderer.render(this.gameState);
+				this.sceneManager.updateCanvasTexture();
+				this.sceneManager.render();
+			}
+
+			// Public API for easy extension
+			addComponent(component) {
+				// Future: Easy way to add new components
+			}
+
+			getGameState() {
+				return this.gameState;
+			}
+
+			getSceneManager() {
+				return this.sceneManager;
+			}
+		}
+
+		// Initialize the application
+		const game = new ShadInvaders();
+		game.initialize();
+
+		// Export for potential Three.js composer integration
+		window.ShadInvaders = {
+			game,
+			CONFIG,
+			GameState,
+			SceneManager,
+			InputHandler,
+			EffectsManager,
+			CanvasRenderer,
+			GameLogic
+		};
 
 		</script>
 	</body>
