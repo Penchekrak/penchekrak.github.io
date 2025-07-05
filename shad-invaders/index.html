@@ -21,6 +21,26 @@
 			touch-action: none;
 		}
 
+		#shareScoreButton {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			z-index: 1001;
+			background: #0088cc;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			font-family: 'Press Start 2P', monospace;
+			font-size: 12px;
+			display: none;
+		}
+
+		#shareScoreButton:hover {
+			background: #006699;
+		}
+
 		@media (hover: none) and (pointer: coarse) {
 			#mobileJoystick {
 				display: block;
@@ -154,6 +174,10 @@
 
             gameOver() {
                 this.is_alive = false;
+				var request = new window.XMLHttpRequest()
+				request.open('POST', '/score', true)
+				request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+				request.send('{"score": ' + this.score + '}')
             }
 
             addScore(points) {
@@ -596,7 +620,7 @@
 				this.gameState.ship.movingLeft = this.sceneManager.bone.rotation.z > 0;
 				this.gameState.ship.movingRight = this.sceneManager.bone.rotation.z < 0;
 				
-				this.sceneManager.controlBall.updateMatrixWorld();
+				// this.sceneManager.controlBall.updateMatrixWorld();
 			}
 
 			onPointerUp(event) {
@@ -754,11 +778,11 @@
 
 		// Add after CONFIG definition
 		class MobileJoystick {
-			constructor(canvas, gameState) {
+			constructor(canvas, gameState, sceneManager) {
 				this.canvas = canvas;
 				this.ctx = canvas.getContext('2d');
 				this.gameState = gameState;
-				
+				this.sceneManager = sceneManager;
 				// Joystick state
 				this.isPressed = false;
 				this.centerX = canvas.width / 2;
@@ -792,6 +816,9 @@
 			}
 
 			handleTouch(event) {
+				if (!this.gameState.is_alive) {
+					this.gameState.restart();
+				}
 				event.preventDefault();
 				const touch = event.touches[0];
 				const rect = this.canvas.getBoundingClientRect();
@@ -815,11 +842,16 @@
 				}
 
 				// Update game state based on stick position
+				console.log('joystick', this.currentX, this.centerX, this.maxDistance);
 				const normalizedX = (this.currentX - this.centerX) / this.maxDistance;
-				this.gameState.ship.movingLeft = normalizedX < -0.3;
-                this.sceneManager.bone.rotation.z = CONFIG.gameplay.joystickMaxRotation;
-				this.gameState.ship.movingRight = normalizedX > 0.3;
-                this.sceneManager.bone.rotation.z = -CONFIG.gameplay.joystickMaxRotation;
+				console.log('normalizedX', normalizedX);
+				this.gameState.ship.movingLeft = normalizedX < 0;
+				this.gameState.ship.movingRight = normalizedX > 0;
+				if (normalizedX < 0) {
+					this.sceneManager.bone.rotation.z = CONFIG.gameplay.joystickMaxRotation;
+				} else if (normalizedX > 0) {
+					this.sceneManager.bone.rotation.z = -CONFIG.gameplay.joystickMaxRotation;
+				}
 			}
 
 			resetStick() {
@@ -828,6 +860,7 @@
 				this.currentY = this.centerY;
 				this.gameState.ship.movingLeft = false;
 				this.gameState.ship.movingRight = false;
+				this.sceneManager.bone.rotation.z = 0;
 			}
 
 			render() {
@@ -837,13 +870,13 @@
 				// Draw base circle
 				this.ctx.beginPath();
 				this.ctx.arc(this.centerX, this.centerY, this.baseRadius, 0, Math.PI * 2);
-				this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+				this.ctx.fillStyle = 'rgba(200, 200, 200, 0.5)';
 				this.ctx.fill();
 
 				// Draw stick
 				this.ctx.beginPath();
 				this.ctx.arc(this.currentX, this.currentY, this.stickRadius, 0, Math.PI * 2);
-				this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+				this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
 				this.ctx.fill();
 
 				requestAnimationFrame(() => this.render());
@@ -872,7 +905,7 @@
 				// Initialize mobile joystick
 				const joystickCanvas = document.getElementById('mobileJoystick');
 				if (joystickCanvas) {
-					this.mobileJoystick = new MobileJoystick(joystickCanvas, this.gameState);
+					this.mobileJoystick = new MobileJoystick(joystickCanvas, this.gameState, this.sceneManager);
 				}
 				
 				this.gameState.createEnemies();
@@ -920,6 +953,10 @@
 			GameLogic
 		};
 
+		</script>
+		<script src="https://telegram.org/js/games.js"></script>
+		<script>
+			document.write('<button style="background-color: #0088cc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: Arial, sans-serif;" onclick="TelegramGameProxy.shareScore()"><img src="https://telegram.org/img/t_logo.png" alt="Telegram Icon" style="height: 20px; vertical-align: middle; margin-right: 5px;">Share score</button>');
 		</script>
 	</body>
 </html>
