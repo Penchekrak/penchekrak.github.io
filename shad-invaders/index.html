@@ -657,26 +657,16 @@
             }
 
 			triggerCameraShake(intensity, duration) {
-				// const originalPosition = this.sceneManager.arcadeMesh.position.clone();
-				// const originalRotation = this.sceneManager.arcadeMesh.rotation.clone();
 
 				const shakeCamera = () => {
-					// this.sceneManager.arcadeMesh.position.x += (Math.random() - 0.5) * intensity;
-					// this.sceneManager.arcadeMesh.position.y += (Math.random() - 0.5) * intensity;
-					// this.sceneManager.arcadeMesh.position.z += (Math.random() - 0.5) * intensity;
 					this.sceneManager.arcadeMesh.rotation.x += (Math.random() - 0.5) * intensity;
-					this.sceneManager.arcadeMesh.rotation.y += (Math.random() - 0.5) * intensity;
+					this.sceneManager.arcadeMesh.rotation.y += (Math.random() - 0.5) * intensity * 2;
 					this.sceneManager.arcadeMesh.rotation.z += (Math.random() - 0.5) * intensity;
-                    this.sceneManager.arcadeMesh.updateMatrixWorld();
 				};
 
 				const resetCamera = () => {
-					// this.sceneManager.camera.position.copy(originalPosition);
-					this.sceneManager.arcadeMesh.rotation.setX(0);
-					this.sceneManager.arcadeMesh.rotation.setY(0);
-                    this.sceneManager.arcadeMesh.rotation.setZ(0);
-                    this.sceneManager.arcadeMesh.updateMatrixWorld();
-					// this.sceneManager.arcadeMesh.updateProjectionMatrix();
+					this.sceneManager.arcadeMesh.rotation.x = 0;
+                    this.sceneManager.arcadeMesh.rotation.z = 0;
 				};
 
 				const shakeInterval = setInterval(shakeCamera, 10);
