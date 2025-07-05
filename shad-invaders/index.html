@@ -10,9 +10,27 @@
 		#info a {
 			color:#4d6675;
 		}
+		#mobileJoystick {
+			position: fixed;
+			bottom: 20px;
+			left: 20px;
+			width: 150px;
+			height: 150px;
+			z-index: 1000;
+			display: none;
+			touch-action: none;
+		}
+
+		@media (hover: none) and (pointer: coarse) {
+			#mobileJoystick {
+				display: block;
+			}
+		}
 		</style>
+        <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
 	</head>
 	<body style="margin: 0;">
+		<canvas id="mobileJoystick"></canvas>
 		<script type="importmap">
 		{
             "imports": {
@@ -33,13 +51,22 @@
 		// Configuration
 		const CONFIG = {
 			canvas: { width: 428, height: 428 },
-			ship: { x: 50, y: 10, width: 10, height: 10, speed: 5 },
-			enemy: { speed: 2, rows: 3, cols: 5, width: 30, height: 25 },
-			bullet: { width: 4, height: 10, speed: 7 },
+			ship: { x: 50, y: 428 - 10, width: 10, height: 10, speed: 100 },
+			enemy: { speed: 30, rows: 3, cols: 7, width: 30, height: 25 },
+			bullet: { width: 4, height: 10, speed: 420 },
 			camera: { fov: 50, near: 0.1, far: 1000 },
-			effects: { shakeIntensity: 0.001, shakeDuration: 100 },
-			gameplay: { autoShootChance: 0.3, joystickMaxRotation: Math.PI/6 }
+			effects: { damageShakeIntensity: 0.02, hitShakeIntensity: 0.01, shakeDuration: 100 },
+			gameplay: { autoShootInterval: 10, joystickMaxRotation: Math.PI/6 }
 		};
+
+        function fillTextMultiLine(ctx, text, x, y) {
+            var lineHeight = ctx.measureText("M").width * 1.2;
+            var lines = text.split("\n");
+            for (var i = 0; i < lines.length; ++i) {
+                ctx.fillText(lines[i], x, y);
+                y += lineHeight;
+            }
+        }
 
 		// Game State Management
 		class GameState {
@@ -51,7 +78,11 @@
 					movingRight: false 
 				};
 				this.enemies = [];
+                this.health = 3;
+                this.score = 0;
 				this.initialized = false;
+                this.is_alive = true;
+                this.started = false;
 			}
 
 			reset() {
@@ -61,12 +92,15 @@
 			}
 
 			createEnemies() {
+                if (!this.started) {
+                    return;
+                }
 				this.enemies = [];
 				for (let i = 0; i < CONFIG.enemy.cols; i++) {
 					for (let j = 0; j < CONFIG.enemy.rows; j++) {
 						this.enemies.push({ 
 							x: i * 50 + 50, 
-							y: j * 40 + 300, 
+							y: j * 40 + 10, 
 							width: CONFIG.enemy.width, 
 							height: CONFIG.enemy.height 
 						});
@@ -74,19 +108,19 @@
 				}
 			}
 
-			updateShip() {
+			updateShip(deltaTime) {
 				if (this.ship.movingLeft && this.ship.x > 0) {
-					this.ship.x -= this.ship.speed;
+					this.ship.x -= (this.ship.speed + Math.floor(this.score / 10) * 10) * deltaTime;
 				}
 				if (this.ship.movingRight && this.ship.x < CONFIG.canvas.width - this.ship.width) {
-					this.ship.x += this.ship.speed;
+					this.ship.x += (this.ship.speed + Math.floor(this.score / 10) * 10) * deltaTime;
 				}
 			}
 
-			updateBullets() {
+			updateBullets(deltaTime) {
 				for (let i = this.ship.bullets.length - 1; i >= 0; i--) {
 					const bullet = this.ship.bullets[i];
-					bullet.y += bullet.speed;
+					bullet.y -= bullet.speed * deltaTime;
 					
 					if (bullet.y < -bullet.height) {
 						this.ship.bullets.splice(i, 1);
@@ -94,9 +128,9 @@
 				}
 			}
 
-			updateEnemies() {
+			updateEnemies(deltaTime) {
 				for (const enemy of this.enemies) {
-					enemy.y -= CONFIG.enemy.speed;
+					enemy.y += (CONFIG.enemy.speed + Math.floor(this.score / 10) * 10) * deltaTime;
 				}
 			}
 
@@ -109,6 +143,35 @@
 					speed: CONFIG.bullet.speed 
 				});
 			}
+
+            takeDamage() {
+                this.health--;
+                if (this.health <= 0) {
+                    this.health = 0;
+                    this.gameOver();
+                }
+            }
+
+            gameOver() {
+                this.is_alive = false;
+            }
+
+            addScore(points) {
+                this.score += points;
+            }
+
+            restart() {
+                this.started = false;
+                this.is_alive = true;
+                this.health = 3;
+                this.score = 0;
+                this.ship.x = 50;
+                this.ship.y = 428 - 10;
+                this.ship.bullets = [];
+                this.enemies = [];
+                this.createEnemies();
+            }
+
 		}
 
 		// Canvas Rendering (moved up to be available for SceneManager)
@@ -118,6 +181,15 @@
 				this.canvas.width = CONFIG.canvas.width;
 				this.canvas.height = CONFIG.canvas.height;
 				this.ctx = this.canvas.getContext('2d');
+
+                var font = new FontFace(
+                    "font",
+                    "url(https://fonts.gstatic.com/s/pressstart2p/v15/e3t4euO8T-267oIAQAu6jDQyK3nVivNm4I81.woff2)"
+                );
+                font.load().then((font) => {
+                    document.fonts.add(font);
+                });
+                this.ctx.font = "50px font";
 			}
 
 			clear() {
@@ -140,15 +212,38 @@
 			drawEnemies(enemies) {
 				this.ctx.fillStyle = 'red';
 				for (const enemy of enemies) {
-					this.ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+					this.ctx.fillRect(enemy.x + enemy.width / 4, enemy.y, enemy.width / 2, enemy.height);
+                    this.ctx.fillRect(enemy.x, enemy.y + enemy.height / 4, enemy.width, enemy.height / 2);
 				}
 			}
 
+            drawHealth(health) {
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillText("❤".repeat(health), 275, 50);
+            }
+
+            drawScore(score) {
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillText(score, 20, 75);
+            }
+
 			render(gameState) {
-				this.clear();
-				this.drawShip(gameState.ship);
-				this.drawBullets(gameState.ship.bullets);
-				this.drawEnemies(gameState.enemies);
+                this.clear();
+                if (!gameState.started) {
+                    this.ctx.fillStyle = 'white';
+                    fillTextMultiLine(this.ctx, "Start", CONFIG.canvas.width / 2 - 110, CONFIG.canvas.height / 2);
+                    return;
+                }
+                if (!gameState.is_alive) {  
+                    this.ctx.fillStyle = 'white';
+                    fillTextMultiLine(this.ctx, "Game\nOver", CONFIG.canvas.width / 2 - 100, CONFIG.canvas.height / 2);
+                    return;
+                }
+                this.drawShip(gameState.ship);
+                this.drawBullets(gameState.ship.bullets);
+                this.drawEnemies(gameState.enemies);
+                this.drawHealth(gameState.health);
+                this.drawScore(gameState.score);
 			}
 		}
 
@@ -163,6 +258,7 @@
 				this.bodyMesh = null;
 				this.raycaster = new THREE.Raycaster();
 				this.controlBall = null;
+                this.restartButton = null;
 				this.bone = null;
 				this.controlBallInitialNDC = null;
 				this.canvasTexture = null;
@@ -170,9 +266,9 @@
 			}
 
 			async initialize() {
+                this.setupRenderer();
 				this.setupScene();
 				await this.loadModel();
-				this.setupRenderer();
 				this.setupPostProcessing();
 				this.setupEventListeners();
 				return this;
@@ -182,21 +278,16 @@
 				this.scene = new THREE.Scene();
 				this.scene.background = new THREE.Color(0xffffff);
 				
-				this.camera = new THREE.PerspectiveCamera(
-					CONFIG.camera.fov, 
-					window.innerWidth / window.innerHeight, 
-					CONFIG.camera.near, 
-					CONFIG.camera.far
-				);
 			}
 
 			async loadModel() {
 				const gltfLoader = new GLTFLoader();
-				const gltf = await gltfLoader.loadAsync('play_automata.glb');
+				const gltf = await gltfLoader.loadAsync('resources/play_automata.glb');
 				
 				this.scene.add(gltf.scene);
                 this.setupLights();
 				this.setupCameraFromGLTF(gltf);
+                this.onWindowResize();
 				this.findControlObjects();
 				this.setupMaterials();
 				
@@ -204,12 +295,12 @@
 			}
 
 			setupCameraFromGLTF(gltf) {
-				const gltfCamera = gltf.cameras[0];
-				this.camera = gltfCamera;
+				this.cameras = gltf.cameras;
+				this.camera = this.cameras[0];
 			}
 
             setupLights() {
-                const light = new THREE.AmbientLight(0xffffff, 3);
+                const light = new THREE.AmbientLight(0xffffff, 2);
                 this.scene.add(light);
                 this.scene.traverse((object) => {
                     if (object.name === 'area_light') {
@@ -226,6 +317,7 @@
 
 			findControlObjects() {
 				this.scene.traverse((object) => {
+                    console.log(object.name);
 					if (object.name === 'LeftJoystickHead') {
 						this.controlBall = object;
 					}
@@ -238,12 +330,21 @@
                     if (object.name === 'upper_body') {
                         this.upperBodyMesh = object;
                     }
+                    if (object.name === 'left_yellow_button') {
+                        this.restartButton = object;
+                    }
+                    if (object.name === 'arcade') {
+                        console.log("arcade found");
+                        this.arcadeMesh = object;
+                    }
 				});
 
 				if (this.bone) {
 					const position = new THREE.Vector3();
+                    this.camera.updateMatrixWorld();
+                    this.camera.updateProjectionMatrix();
 					const projection = this.bone.getWorldPosition(position).project(this.camera);
-					this.controlBallInitialNDC = new THREE.Vector2(projection.x, projection.y);
+					this.controlBallInitialNDC = new THREE.Vector2(projection.x, projection.y); 
 				}
 			}
 
@@ -253,9 +354,21 @@
 						this.setupSkinning(object);
 					}
 					
-					if (object.name === 'screen_surface') {
+					if (object.name === 'screen_glass') {
 						this.setupCanvasTexture(object);
 					}
+
+                    if (object.name === 'guys') {
+                        // object.visible = false;
+                        let material = new THREE.MeshBasicMaterial();
+                        material.map = object.material.map;
+                        material.transparent = true;
+                        material.map.colorSpace = THREE.SRGBColorSpace;
+                        material.needsUpdate = true;
+                        // material.alphaMap = object.material.alphaMap;
+                        object.material = material;
+                        this.guysMesh = object;
+                    }
 				});
 			}
 
@@ -276,6 +389,8 @@
 			setupCanvasTexture(object) {
 				const material = new THREE.MeshPhongMaterial();
 				this.canvasTexture = new THREE.CanvasTexture(this.canvasRenderer.canvas);
+                this.canvasTexture.flipY = false;
+                this.canvasTexture.needsUpdate = true;
 				material.map = this.canvasTexture;
                 material.emissiveMap = this.canvasTexture;
                 material.emissiveIntensity = 10;
@@ -377,6 +492,7 @@
 			onWindowResize() {
 				this.camera.aspect = window.innerWidth / window.innerHeight;
 				this.camera.updateProjectionMatrix();
+                this.camera.updateMatrixWorld();
 				this.renderer.setSize(window.innerWidth, window.innerHeight);
 				
 				if (this.composer) {
@@ -427,15 +543,41 @@
 				canvas.addEventListener('pointerup', (e) => this.onPointerUp(e));
 				window.addEventListener('keydown', (e) => this.onKeyDown(e));
 				window.addEventListener('keyup', (e) => this.onKeyUp(e));
+                // window.addEventListener("devicemotion", handleMotion, true);
+				
+				// Add click event for starting the game
+				canvas.addEventListener('click', () => this.startGameIfNotStarted());
+			}
+
+			startGameIfNotStarted() {
+                    // this.sceneManager.camera = this.sceneManager.cameras[1];
+				if (!this.gameState.started) {
+					this.gameState.started = true;
+				}
 			}
 
 			onPointerDown(event) {
+				this.startGameIfNotStarted();
+                
 				const mouseNDC = this.sceneManager.getMouseNDC(event);
 				const intersects = this.sceneManager.raycastFromMouse(mouseNDC);
+                console.log(intersects);
+				// if (intersects.length > 0) {
+				// 	const intersect = intersects[0];
+				// 	const sphereGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+				// 	const sphereMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
+				// 	const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+				// 	sphere.position.copy(intersect.point);
+				// 	this.sceneManager.scene.add(sphere);
+				// }
 				
 				if (intersects.length > 0 && intersects[0].object === this.sceneManager.controlBall) {
 					this.isDragging = true;
 				}
+                if (intersects.length > 0 && intersects[0].object === this.sceneManager.restartButton) {
+                    this.gameState.restart();
+                    this.sceneManager.restartButton.position.setY(-0.001);
+                }
 			}
 
 			onPointerMove(event) {
@@ -444,6 +586,7 @@
 				const mouseNDC = this.sceneManager.getMouseNDC(event);
 				const direction = mouseNDC.sub(this.sceneManager.controlBallInitialNDC).normalize();
 				const rotationAngle = -Math.atan2(direction.x, direction.y);
+
 				
 				this.sceneManager.bone.rotation.z = Math.min(
 					Math.max(rotationAngle, -CONFIG.gameplay.joystickMaxRotation), 
@@ -462,7 +605,7 @@
 			}
             
             onKeyDown(event) {
-                console.log("keydown", event.key);
+                this.startGameIfNotStarted();
                 if (event.key === "ArrowLeft") {
                     this.sceneManager.bone.rotation.z = CONFIG.gameplay.joystickMaxRotation;
                     this.gameState.ship.movingLeft = true;
@@ -486,9 +629,14 @@
 
             resetJoystick() {
                 this.sceneManager.bone.rotation.z = 0;
+                this.sceneManager.restartButton.position.setY(0);
                 this.gameState.ship.movingLeft = false;
                 this.gameState.ship.movingRight = false;
                 this.sceneManager.controlBall.updateMatrixWorld();
+            }
+
+            handleMotion(event) {
+                const accelerationX = event.acceleration.x;
             }
 		}
 
@@ -498,31 +646,44 @@
 				this.sceneManager = sceneManager;
 			}
 
-			triggerCameraShake() {
-				const originalPosition = this.sceneManager.camera.position.clone();
-				const originalRotation = this.sceneManager.camera.rotation.clone();
+            emitBlasterSound() {
+                if (Math.random() < 0.01) {
+                    const audio = new Audio("resources/bam.mp3");
+                    audio.play();
+                    return;
+                }
+                const audio = new Audio(`resources/piu${Math.floor(Math.random() * 8) + 1}.mp3`);
+                audio.play();
+            }
+
+			triggerCameraShake(intensity, duration) {
+				// const originalPosition = this.sceneManager.arcadeMesh.position.clone();
+				// const originalRotation = this.sceneManager.arcadeMesh.rotation.clone();
 
 				const shakeCamera = () => {
-					this.sceneManager.camera.position.x += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
-					this.sceneManager.camera.position.y += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
-					this.sceneManager.camera.position.z += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
-					this.sceneManager.camera.rotation.x += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
-					this.sceneManager.camera.rotation.y += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
-					this.sceneManager.camera.rotation.z += (Math.random() - 0.5) * CONFIG.effects.shakeIntensity;
-					this.sceneManager.camera.updateProjectionMatrix();
+					// this.sceneManager.arcadeMesh.position.x += (Math.random() - 0.5) * intensity;
+					// this.sceneManager.arcadeMesh.position.y += (Math.random() - 0.5) * intensity;
+					// this.sceneManager.arcadeMesh.position.z += (Math.random() - 0.5) * intensity;
+					this.sceneManager.arcadeMesh.rotation.x += (Math.random() - 0.5) * intensity;
+					this.sceneManager.arcadeMesh.rotation.y += (Math.random() - 0.5) * intensity;
+					this.sceneManager.arcadeMesh.rotation.z += (Math.random() - 0.5) * intensity;
+                    this.sceneManager.arcadeMesh.updateMatrixWorld();
 				};
 
 				const resetCamera = () => {
-					this.sceneManager.camera.position.copy(originalPosition);
-					this.sceneManager.camera.rotation.copy(originalRotation);
-					this.sceneManager.camera.updateProjectionMatrix();
+					// this.sceneManager.camera.position.copy(originalPosition);
+					this.sceneManager.arcadeMesh.rotation.setX(0);
+					this.sceneManager.arcadeMesh.rotation.setY(0);
+                    this.sceneManager.arcadeMesh.rotation.setZ(0);
+                    this.sceneManager.arcadeMesh.updateMatrixWorld();
+					// this.sceneManager.arcadeMesh.updateProjectionMatrix();
 				};
 
 				const shakeInterval = setInterval(shakeCamera, 10);
 				setTimeout(() => {
 					clearInterval(shakeInterval);
 					resetCamera();
-				}, CONFIG.effects.shakeDuration);
+				}, duration);
 			}
 		}
 
@@ -531,6 +692,9 @@
 			constructor(gameState, effectsManager) {
 				this.gameState = gameState;
 				this.effectsManager = effectsManager;
+				this.lastTime = performance.now();
+				this.accumulatedTime = 0;
+				this.shootAccumulatedTime = 0;
 			}
 
 			checkCollisions() {
@@ -539,7 +703,8 @@
 						if (this.isColliding(this.gameState.ship.bullets[i], this.gameState.enemies[j])) {
 							this.gameState.ship.bullets.splice(i, 1);
 							this.gameState.enemies.splice(j, 1);
-							this.effectsManager.triggerCameraShake();
+                            this.gameState.addScore(1);
+							this.effectsManager.triggerCameraShake(CONFIG.effects.hitShakeIntensity, CONFIG.effects.shakeDuration);
 							break;
 						}
 					}
@@ -553,22 +718,145 @@
 					   rect1.y + rect1.height > rect2.y;
 			}
 
-			handleAutoShooting() {
-				if (Math.random() < CONFIG.gameplay.autoShootChance) {
-					this.gameState.addBullet();
-				}
-			}
+			handleDamage() {
+                for (let i = this.gameState.enemies.length - 1; i >= 0; i--) {
+                    if (this.gameState.enemies[i].y > CONFIG.canvas.height - CONFIG.enemy.height / 2) {
+                        this.gameState.takeDamage();
+                        this.gameState.enemies.splice(i, 1);
+                        this.effectsManager.triggerCameraShake(CONFIG.effects.damageShakeIntensity, CONFIG.effects.shakeDuration);
+                    }
+                }
+            }
 
 			update() {
-				this.gameState.updateShip();
-				this.gameState.updateBullets();
-				this.gameState.updateEnemies();
-				this.checkCollisions();
-				this.handleAutoShooting();
+                if (!this.gameState.started || !this.gameState.is_alive) {
+                    return;
+                }
 
-				if (this.gameState.enemies.length === 0) {
-					this.gameState.createEnemies();
+                const currentTime = performance.now();
+                const deltaTime = (currentTime - this.lastTime) / 1000; // Convert to seconds
+                this.lastTime = currentTime;
+
+                this.accumulatedTime += deltaTime;
+                this.shootAccumulatedTime += deltaTime;
+
+                // Update ship movement
+                this.gameState.updateShip(deltaTime);
+                this.gameState.updateBullets(deltaTime);
+                this.gameState.updateEnemies(deltaTime);
+                this.checkCollisions();
+
+                // Handle auto shooting based on time
+                const shootInterval = CONFIG.gameplay.autoShootInterval / 60; // Convert from frames to seconds
+                if (this.shootAccumulatedTime >= shootInterval) {
+                    this.gameState.addBullet();
+                    this.effectsManager.emitBlasterSound();
+                    this.shootAccumulatedTime = 0;
+                }
+
+                this.handleDamage();
+
+                if (this.gameState.enemies.length === 0) {
+                    this.gameState.createEnemies();
+                }
+			}
+		}
+
+		// Add after CONFIG definition
+		class MobileJoystick {
+			constructor(canvas, gameState) {
+				this.canvas = canvas;
+				this.ctx = canvas.getContext('2d');
+				this.gameState = gameState;
+				
+				// Joystick state
+				this.isPressed = false;
+				this.centerX = canvas.width / 2;
+				this.centerY = canvas.height / 2;
+				this.baseRadius = 40;
+				this.stickRadius = 20;
+				this.currentX = this.centerX;
+				this.currentY = this.centerY;
+				this.maxDistance = 40;
+
+				// Setup canvas
+				this.resizeCanvas();
+				window.addEventListener('resize', () => this.resizeCanvas());
+
+				// Touch events
+				canvas.addEventListener('touchstart', (e) => this.handleTouch(e), false);
+				canvas.addEventListener('touchmove', (e) => this.handleTouch(e), false);
+				canvas.addEventListener('touchend', () => this.resetStick(), false);
+
+				// Start render loop
+				this.render();
+			}
+
+			resizeCanvas() {
+				this.canvas.width = this.canvas.clientWidth;
+				this.canvas.height = this.canvas.clientHeight;
+				this.centerX = this.canvas.width / 2;
+				this.centerY = this.canvas.height / 2;
+				this.currentX = this.centerX;
+				this.currentY = this.centerY;
+			}
+
+			handleTouch(event) {
+				event.preventDefault();
+				const touch = event.touches[0];
+				const rect = this.canvas.getBoundingClientRect();
+				const x = touch.clientX - rect.left;
+				const y = touch.clientY - rect.top;
+				
+				this.isPressed = true;
+				
+				// Calculate stick position
+				const deltaX = x - this.centerX;
+				const deltaY = y - this.centerY;
+				const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+				
+				if (distance > this.maxDistance) {
+					const angle = Math.atan2(deltaY, deltaX);
+					this.currentX = this.centerX + Math.cos(angle) * this.maxDistance;
+					this.currentY = this.centerY + Math.sin(angle) * this.maxDistance;
+				} else {
+					this.currentX = x;
+					this.currentY = y;
 				}
+
+				// Update game state based on stick position
+				const normalizedX = (this.currentX - this.centerX) / this.maxDistance;
+				this.gameState.ship.movingLeft = normalizedX < -0.3;
+                this.sceneManager.bone.rotation.z = CONFIG.gameplay.joystickMaxRotation;
+				this.gameState.ship.movingRight = normalizedX > 0.3;
+                this.sceneManager.bone.rotation.z = -CONFIG.gameplay.joystickMaxRotation;
+			}
+
+			resetStick() {
+				this.isPressed = false;
+				this.currentX = this.centerX;
+				this.currentY = this.centerY;
+				this.gameState.ship.movingLeft = false;
+				this.gameState.ship.movingRight = false;
+			}
+
+			render() {
+				// Clear canvas
+				this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+				// Draw base circle
+				this.ctx.beginPath();
+				this.ctx.arc(this.centerX, this.centerY, this.baseRadius, 0, Math.PI * 2);
+				this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+				this.ctx.fill();
+
+				// Draw stick
+				this.ctx.beginPath();
+				this.ctx.arc(this.currentX, this.currentY, this.stickRadius, 0, Math.PI * 2);
+				this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+				this.ctx.fill();
+
+				requestAnimationFrame(() => this.render());
 			}
 		}
 
@@ -581,6 +869,7 @@
 				this.inputHandler = null;
 				this.effectsManager = null;
 				this.gameLogic = null;
+				this.mobileJoystick = null;
 			}
 
 			async initialize() {
@@ -589,6 +878,12 @@
 				this.effectsManager = new EffectsManager(this.sceneManager);
 				this.inputHandler = new InputHandler(this.sceneManager, this.gameState);
 				this.gameLogic = new GameLogic(this.gameState, this.effectsManager);
+				
+				// Initialize mobile joystick
+				const joystickCanvas = document.getElementById('mobileJoystick');
+				if (joystickCanvas) {
+					this.mobileJoystick = new MobileJoystick(joystickCanvas, this.gameState);
+				}
 				
 				this.gameState.createEnemies();
 				this.gameState.initialized = true;
