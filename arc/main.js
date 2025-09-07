@@ -252,16 +252,34 @@ function scaleDecal() {
 }
 
 function loadArc() {
-
     const loader = new GLTFLoader();
+    const loadingBar = document.getElementById('loading-bar');
+
+    // Show loading bar
+    loadingBar.style.transform = 'scaleX(0)';
 
     loader.load('arc_model/arc_small_lower_quadri_sep.gltf', function (gltf) {
         mesh = gltf.scene.children[0];
         scene.add(mesh);
         mesh.scale.set(10, 10, 10);
         mesh.position.y = mesh.position.y - 10;
-    });
+        
 
+        // Hide loading bar when done
+        loadingBar.style.transform = 'scaleX(1)';
+        setTimeout(() => {
+            loadingBar.style.transform = 'scaleX(0)';
+        }, 500); // Hide after a short delay
+    }, 
+    // onProgress callback
+    function (xhr) {
+        const progress = (xhr.loaded / xhr.total);
+        loadingBar.style.transform = 'scaleX(' + progress + ')';
+    }, 
+    // onError callback
+    function (error) {
+        console.error('An error happened', error);
+    });
 }
 
 function shoot() {
