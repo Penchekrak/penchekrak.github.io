@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mujoco model="editor_environment">
+  <compiler angle="radian"/>
+  <statistic center="0 0 3" extent="6"/>
+  <visual>
+    <headlight diffuse="0.01 0.01 0.01" ambient="0.01 0.01 0.01" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="150" elevation="-20"/>
+  </visual>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture name="grid" type="2d" builtin="checker" width="256" height="256" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+    <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+  </asset>
+  <default>
+    <geom condim="4" friction="1.0 0.05 0.01" solref="0.002 1.0" solimp="0.95 0.99 0.001"/>
+  </default>
+  <worldbody>
+    <light pos="3 0 7.5" dir="-1 0 -1" directional="true" diffuse="0.08 0.08 0.08" specular="0 0 0"/>
+    <geom name="floor" size="0 0 0.15" type="plane" material="grid" contype="1" conaffinity="1" group="3" friction="0.5 0.02 0.01"/>
+    <body name="cylinder_1" pos="0.675018299 0.754794912 0.113780184">
+      <geom type="cylinder" size="0.402850267 0.147014795" rgba="0.6 0.4 0.2 0.01" mass="0.1" contype="1" conaffinity="1" friction="1.0 0.05 0.01" condim="4" group="3"/>
+    </body>
+    <body name="cylinder_2" pos="0.390954243 0.118096837 -0.358896621">
+      <geom type="cylinder" size="0.201784719 0.605778494" rgba="0.6 0.4 0.2 0.01" mass="0.1" contype="1" conaffinity="1" friction="1.0 0.05 0.01" condim="4" group="3"/>
+    </body>
+    <body name="wall_3" pos="0.016780942 1.261973134 3" euler="1.57 0.13344484217283376 0">
+      <geom type="plane" size="3 3 0.15" rgba="0.5 0.5 0.5 0.01" mass="0" contype="1" conaffinity="1" friction="1.0 0.05 0.01" condim="4" group="3"/>
+    </body>
+    <body name="wall_4" pos="1.437450007 0.54799638 2.989499726" euler="1.57 -1.070453822110739 0">
+      <geom type="plane" size="3 3 0.15" rgba="0.5 0.5 0.5 0.01" mass="0" contype="1" conaffinity="1" friction="1.0 0.05 0.01" condim="4" group="3"/>
+    </body>
+    <body name="cylinder_5" pos="0.037280299 0.585945093 -0.492541025">
+      <geom type="cylinder" size="0.181123071 0.75" rgba="0.6 0.4 0.2 0.01" mass="0.1" contype="1" conaffinity="1" friction="1.0 0.05 0.01" condim="4" group="3"/>
+    </body>
+    <body name="cylinder_6" pos="1.05792733 0.236444225 -0.50024955">
+      <geom type="cylinder" size="0.177523454 0.75" rgba="0.6 0.4 0.2 0.01" mass="0.1" contype="1" conaffinity="1" friction="1.0 0.05 0.01" condim="4" group="3"/>
+    </body>
+  </worldbody>
+  <custom>
+    <splat url="scene.spz" pos="0 0 0" euler="0.000000 0.000000 0.000000" scale="-3 3 -3"/>
+  </custom>
+</mujoco>
