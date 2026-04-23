@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="UnicycleSimplified">
+  <compiler angle="radian" />
+
+  <option timestep="0.005" />
+
+  <visual>
+    <global azimuth="120" elevation="-20" offwidth="2560" offheight="1440" />
+    <map force="0.1" zfar="30" />
+  </visual>
+
+  <statistic center="0 0 0.7" />
+
+  <asset>
+    <texture type="skybox" colorspace="auto" name="texture_0_" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="32" height="192" />
+    <texture type="cube" colorspace="auto" name="body" builtin="flat" mark="cross" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" width="128" height="768" />
+    <texture type="2d" colorspace="auto" name="grid" builtin="checker" rgb1="0.1 0.2 0.3" rgb2="0.2 0.3 0.4" width="512" height="512" />
+    <material name="body" texture="body" texuniform="true" rgba="0.8 0.6 0.4 1" />
+    <material name="grid" texture="grid" texuniform="true" reflectance="0.2" />
+  </asset>
+
+  <worldbody>
+    <geom name="floor" size="0 0 0.05" type="plane" material="grid" />
+    <light name="spotlight" target="com" pos="0 -6 4" dir="0 0 -1" cutoff="30" diffuse="0.8 0.8 0.8" mode="targetbodycom" />
+    <light name="top" pos="0 0 2" dir="0 0 -1" mode="trackcom" />
+
+    <!-- Wheel is the free root: contacts the ground, so putting the floating
+         base here makes the kinematic chain grow outward from the contact. -->
+    <body name="wheel" pos="-0.0131 0 0.27">
+      <joint name="root" type="free" />
+      <geom name="wheel_collision" size="0.267329 0.057815 0.267329" type="ellipsoid" rgba="0.25 0.25 0.28 1" />
+      <!-- Seat / shaft: intermediate link between the wheel spin joint and the
+           pelvis hinges. Exists so that the continuous revolute `wheel` joint
+           is isolated on this body below the wheel, while the pelvis hinges
+           live on the com body above. Mass is deliberately tiny (the upper
+           body inertia lives on `com`, and the wheel inertia comes from its
+           geom). Axis flipped (0 -1 0) vs. the original leaf-wheel model so
+           that joint angle, ctrlrange, and gear sign remain unchanged after
+           re-rooting (swapping parent/child inverts θ; flipping axis cancels
+           that inversion). -->
+      <body name="seat" pos="-0.005 0 0.6096">
+        <joint name="wheel" pos="0.005 0 -0.6096" axis="0 -1 0" limited="false" actuatorfrclimited="false" />
+        <inertial pos="0 0 0" mass="0.001" diaginertia="1e-8 1e-8 1e-8" />
+        <!-- Visual-only thin rod: pelvis hinge -> wheel center (seat-body frame). -->
+        <geom name="link_pelvis_to_wheel" type="cylinder" fromto="0.005 0 0.0954 0.005 0 -0.6096" size="0.01" contype="0" conaffinity="0" material="body" group="1" />
+        <!-- Massless collision capsule approximating the whole humanoid
+             (torso + head + waist + pelvis + legs; arms/hands ignored).
+             Rigidly attached to the seat so it tips with the pelvis hinge
+             but does NOT spin with the wheel (the wheel joint is below the
+             seat in the new tree). density="0" keeps the seat mass at the
+             explicit inertial tag above. -->
+        <geom name="body_shell" type="capsule" pos="0.109486 -0.004766 0.035339" size="0.2255 0.5" group="3" rgba="0.5 0.5 0.9 0.25" density="0" />
+
+        <!-- Upper-body COM body. Inertial values equal the composite mass /
+             COM / principal moments of the full humanoid's upper body only
+             (torso, head, waist_lower, pelvis, both arms); legs are excluded.
+             Pelvis joint axes flipped for the same reason as the wheel joint
+             above: keep θ, range, and ctrl semantics identical to the
+             original com-rooted model. -->
+        <body name="com" pos="0.005 0 0.369073">
+          <joint name="pelvis_y" pos="0 0 -0.273673" axis="0 -1 0" limited="true" range="-1.309 0.523599" actuatorfrclimited="false" />
+          <joint name="pelvis_x" pos="0 0 -0.273673" axis="-1 0 0" limited="true" range="-0.610865 0.610865" actuatorfrclimited="false" />
+          <inertial pos="0 0 0" mass="23.566842" diaginertia="0.773919 1.104746 1.765585" />
+          <geom name="com_marker" type="sphere" size="0.05" contype="0" conaffinity="0" rgba="0.8 0.6 0.4 0.3" />
+          <!-- Visual-only thin rod: COM sphere -> pelvis hinge (com-body frame). -->
+          <geom name="link_com_to_pelvis" type="cylinder" fromto="0 0 0 0 0 -0.273673" size="0.01" contype="0" conaffinity="0" material="body" group="1" />
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <!-- Pelvis actuators are PD position servos: ctrl is the target joint
+         angle (rad) clipped to the physical joint range. The explicit
+         gainprm/biasprm form expands to force = kp*(ctrl - qpos) - kv*qvel,
+         with kp=200, kv=20. Releasing the drag pad commands ctrl=0, so the
+         rider is actively driven back to the upright reference pose. -->
+    <general name="pelvis_y" joint="pelvis_y" ctrllimited="true" ctrlrange="-1.309 0.523599"
+             gainprm="200 0 0" biastype="affine" biasprm="0 -200 -20" />
+    <general name="pelvis_x" joint="pelvis_x" ctrllimited="true" ctrlrange="-0.610865 0.610865"
+             gainprm="200 0 0" biastype="affine" biasprm="0 -200 -20" />
+    <general name="wheel" joint="wheel" ctrllimited="false" forcelimited="false" actlimited="false" gear="5 0 0 0 0 0" />
+  </actuator>
+</mujoco>
