@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ares ARKit Scene Viewer</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main id="viewer">
+    <canvas id="scene"></canvas>
+    <section id="panel" aria-label="viewer controls">
+      <div class="row">
+        <strong id="title">Ares Scene</strong>
+        <span id="counts">loading</span>
+      </div>
+      <label>Pose <input id="pose" type="range" min="0" max="0" value="0"></label>
+      <label>Frustum stride <input id="stride" type="range" min="1" max="20" value="6" step="1"></label>
+      <label class="check">Emphasize XYZ path <input id="trajectoryStress" type="checkbox"></label>
+      <div class="row">
+        <button id="reset" type="button">Reset View</button>
+        <span id="poseLabel">frame --</span>
+      </div>
+      <img id="thumb" alt="selected camera frame">
+    </section>
+  </main>
+  <script type="module" src="./viewer.js"></script>
+</body>
+</html>
