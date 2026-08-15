@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Offline Mechanism and Robot Catalogue</title>
+<style>
+:root{color-scheme:light;--ink:#1a2633;--muted:#65727f;--line:#d6dde4;--blue:#174a72;--blue-soft:#eaf2f8;--paper:#fff;--canvas:#f4f6f8;--amber:#8a5b16}*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:var(--blue);color:#fff;padding:24px clamp(16px,3vw,44px) 20px}header h1{margin:0 0 6px;font-size:clamp(20px,2.6vw,32px);line-height:1.15;letter-spacing:0}header p{margin:0;max-width:1000px;color:#dce9f2}.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end;padding:16px clamp(16px,3vw,44px);background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}label{display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:12px;font-weight:600}input,select{min-height:38px;border:1px solid #aebbc7;background:#fff;color:var(--ink);border-radius:4px;padding:7px 10px;font:inherit}#search{min-width:min(420px,90vw)}.count{margin-left:auto;color:var(--muted);align-self:center}.table-wrap{overflow:auto;margin:18px clamp(10px,2vw,28px) 36px;background:var(--paper);border:1px solid var(--line)}table{border-collapse:separate;border-spacing:0;min-width:1720px;width:100%}caption{caption-side:top;text-align:left;padding:14px 16px;font-weight:700;background:var(--paper)}th,td{vertical-align:top;text-align:left;padding:12px 11px;border-top:1px solid var(--line);border-right:1px solid var(--line)}thead th{position:sticky;top:71px;z-index:4;background:#eef3f7;color:#263b4e;font-size:12px;text-transform:uppercase;letter-spacing:.03em}tbody th{width:190px;background:#fbfcfd;font-weight:600}tbody td:nth-child(3){width:245px}tbody td:nth-child(4),tbody td:nth-child(5){width:300px}tbody td:nth-child(6){width:260px}tbody td:nth-child(7){width:235px;color:var(--amber)}tr.hidden{display:none}.category span{display:inline-block;background:var(--blue-soft);color:var(--blue);border-left:3px solid #4d91bd;padding:4px 6px;font-size:12px;font-weight:700}.mechanism{color:var(--blue);font-size:15px}.source-line{color:var(--muted);font-size:11px;margin-top:4px;font-weight:400}video{display:block;width:220px;height:124px;object-fit:cover;background:#dfe5ea;border:1px solid #b9c4ce}.video-meta{width:220px;display:grid;gap:2px;margin-top:5px;font-size:11px;color:var(--muted)}.video-meta strong{color:var(--ink);font-size:12px;font-weight:600}.video-missing{width:220px;height:124px;display:grid;place-items:center;padding:12px;background:#fff7e8;border:1px solid #e5c27d;color:var(--amber);text-align:center}footer{color:var(--muted);padding:0 clamp(16px,3vw,44px) 28px;font-size:12px}@media(max-width:760px){header{padding:18px 14px}.controls{position:static;padding:12px 14px}.count{margin-left:0;width:100%}.table-wrap{margin:10px 6px 24px}thead th{top:0}}
+</style></head><body>
+<header><h1>Offline Mechanism and Robot Catalogue</h1><p>81 conveyor-line mechanisms and robots with local demonstration videos, operating conditions, SKU constraints, representative vendors, typical uses, and transparent price treatment. Research date: 2026-08-14.</p></header>
+<section class="controls" aria-label="Catalogue filters"><label>Search <input id="search" type="search" placeholder="Search mechanism, vendor, usage..." autocomplete="off"></label><label>Category <select id="category"><option value="">All categories</option><option value="Transfer &amp; transport">Transfer &amp; transport</option><option value="Robots">Robots</option><option value="Singulation &amp; feeding">Singulation &amp; feeding</option><option value="Orientation">Orientation</option><option value="Accumulation &amp; buffering">Accumulation &amp; buffering</option><option value="Sorting">Sorting</option></select></label><div class="count" id="count" aria-live="polite">81 entries</div></section>
+<main class="table-wrap"><table><caption>Detailed mechanism and robot catalogue, excluding inspection and identification devices</caption><thead><tr><th>Category</th><th>Mechanism</th><th>Typical usages</th><th>Working conditions and integration</th><th>SKU constraints</th><th>Vendors / models</th><th>Price treatment</th><th>Embedded demonstration</th></tr></thead><tbody><tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport flat belt conveyor continuous traction surface for cartons, polybags, loose items and packages; ubiquitous for transport, induction and elevation. dorner, interroll, honeywell, hytrol, mk, flexlink, dorner. honeywell lists case/tote/polybag conveyor families as core material-handling equipment. cost: rfq.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Flat belt conveyor</div><div class="source-line">Source row 169</div></th>
+    <td>Continuous traction surface for cartons, polybags, loose items and packages; ubiquitous for transport, induction and elevation.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Application-specific belt width/load; several m/s is practical in parcel systems, while packaging lines may run much faster in items/min rather than belt velocity.</td>
+    <td>Continuous traction surface for cartons, polybags, loose items and packages; ubiquitous for transport, induction and elevation. Photoeyes, encoders, VFD/servo drives, PLC; excellent for irregular bottoms and small items.</td>
+    <td>Dorner, Interroll, Honeywell, Hytrol, mk, FlexLink, Dorner. Honeywell lists case/tote/polybag conveyor families as core material-handling equipment. Cost: RFQ.</td>
+    <td class="price">RFQ; the source catalogue identifies this class as project-specific and public OEM pricing was not posted.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/001-flat-belt-conveyor.mp4"></video><div class="video-meta"><strong>Dorner 2200 Series Belted and LPZ Conveyors</strong><span>Steven Engineering, Inc.</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport motor-driven roller conveyor individually or zone-driven rollers for cartons/totes. interroll ec5000; hytrol ezlogic systems. cost: rfq.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Motor-driven roller conveyor</div><div class="source-line">Source row 170</div></th>
+    <td>Individually or zone-driven rollers for cartons/totes.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Typical design metric is kg/zone or kg/m and conveyor speed. Interroll EC5000 RollerDrive uses 24/48 VDC and is intended for zero-pressure architectures.</td>
+    <td>Unsuitable for very soft/small objects without belts or close roller pitch.</td>
+    <td>Interroll EC5000; Hytrol EZLogic systems. Cost: RFQ.</td>
+    <td class="price">RFQ; the source catalogue identifies this class as project-specific and public OEM pricing was not posted.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/002-motor-driven-roller-conveyor.mp4"></video><div class="video-meta"><strong>Interroll RollerDrive EC5000 - a perfect fit to your application</strong><span>Interroll</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport vacuum belt conveyor perforated belt and vacuum plenum hold thin/light products during incline, acceleration or precise handling. dorner 2200 vacuum belt. cost: rfq.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Vacuum belt conveyor</div><div class="source-line">Source row 171</div></th>
+    <td>Perforated belt and vacuum plenum hold thin/light products during incline, acceleration or precise handling.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Dorner's 2200 vacuum-belt configuration is published for loads up to about 120 lb and speeds up to 400 ft/min.</td>
+    <td>Perforated belt and vacuum plenum hold thin/light products during incline, acceleration or precise handling. Vacuum pump/blower, pressure monitoring, VFD/servo; excellent for sheets, pouches and unstable products; added energy, noise and filter maintenance.</td>
+    <td>Dorner 2200 Vacuum Belt. Cost: RFQ.</td>
+    <td class="price">RFQ; the source catalogue identifies this class as project-specific and public OEM pricing was not posted.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/003-vacuum-belt-conveyor.mp4"></video><div class="video-meta"><strong>Dorner Vacuum Conveyor</strong><span>Dorner Conveyors</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport radius/curve modular-belt conveyor maintains a continuous conveying surface through a horizontal curve. intralox zero tangent, interroll/hytrol curves.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Radius/curve modular-belt conveyor</div><div class="source-line">Source row 172</div></th>
+    <td>Maintains a continuous conveying surface through a horizontal curve.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Intralox ZERO TANGENT radius belts are offered up to about 55 in/140 cm wide and standard turns including 30°, 45°, 60°, 90° and 180°.</td>
+    <td>Conventional motor/PLC; avoids separate turntable and can preserve orientation. Curves consume plan area and impose belt/side-force constraints.</td>
+    <td>Intralox ZERO TANGENT, Interroll/Hytrol curves.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/004-radius-curve-modular-belt-conveyor.mp4"></video><div class="video-meta"><strong>How to Install and Remove Belt Rods: Occluded Hole Method (MPB Maintenance)</strong><span>Intralox</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport lift-and-transfer conveyor raises belts/chains through a main roller bed, then drives the load 90° onto another conveyor. dorner ert150/ert250; interroll; mk; bosch rexroth. dorner supports c-slot sensors and brushless dc motor/controller integration.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Lift-and-transfer conveyor</div><div class="source-line">Source row 173</div></th>
+    <td>Raises belts/chains through a main roller bed, then drives the load 90° onto another conveyor.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Dorner ERT150: roughly 18 kg/40 lb lift capacity and up to 37 m/min; larger ERT250 transfer solutions support about 114 kg/pallet at the same cited line speed.</td>
+    <td>Cyclic actuator introduces wear and limits peak transfer rate.</td>
+    <td>Dorner ERT150/ERT250; Interroll; mk; Bosch Rexroth. Dorner supports C-slot sensors and brushless DC motor/controller integration.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/005-lift-and-transfer-conveyor.mp4"></video><div class="video-meta"><strong>ERT 250 Conveyor - Edge Roller Technology for Pallet &amp; Tray Handling</strong><span>Dorner Conveyors</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport pop-up chain transfer chains rise between rollers, then carry a tote/pallet perpendicular to its original direction. honeywell includes pivoting chain and right-angle transfers in its portfolio/ip. cost: rfq.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Pop-up chain transfer</div><div class="source-line">Source row 174</div></th>
+    <td>Chains rise between rollers, then carry a tote/pallet perpendicular to its original direction.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Payload is highly design-specific; especially common for pallets/heavy cases.</td>
+    <td>Requires compatible bottom geometry and periodic maintenance.</td>
+    <td>Honeywell includes pivoting chain and right-angle transfers in its portfolio/IP. Cost: RFQ.</td>
+    <td class="price">RFQ; the source catalogue identifies this class as project-specific and public OEM pricing was not posted.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/006-pop-up-chain-transfer.mp4"></video><div class="video-meta"><strong>Conveyor Units Pallet Conveyor Pop Up Roller Transfer</strong><span>CONVEYOR UNITS LTD</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport pop-up roller / narrow-belt transfer small wheels/rollers or transverse belts rise through a belt/roller bed to divert the sku. hytrol narrow belt sorter; honeywell pop-up wheel technologies.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Pop-up roller / narrow-belt transfer</div><div class="source-line">Source row 175</div></th>
+    <td>Small wheels/rollers or transverse belts rise through a belt/roller bed to divert the SKU.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Hytrol narrow-belt sorters use pop-up transfer rollers and support 30° or 90° diversion.</td>
+    <td>Small wheels/rollers or transverse belts rise through a belt/roller bed to divert the SKU. Item footprint must span enough transfer elements; soft bags can be challenging.</td>
+    <td>Hytrol Narrow Belt Sorter; Honeywell pop-up wheel technologies.</td>
+    <td class="price">Public Hytrol estimate: about US$540 module or US$4,500–6,600 per divert, depending on 30°/90° layout; configuration and integration extra.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/007-pop-up-roller-narrow-belt-transfer.mp4"></video><div class="video-meta"><strong>Hytrol Prosort MRT conveyor, Hytrol Conveyor Co</strong><span>HCM Systems</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport swivel / pivot-wheel transfer powered wheels rotate to steer items to a side lane without lifting the full product. interroll rm 8711/8712 official specification; hytrol pivot wheel.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Swivel / pivot-wheel transfer</div><div class="source-line">Source row 176</div></th>
+    <td>Powered wheels rotate to steer items to a side lane without lifting the full product.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Interroll RM 8711/8712: 50 kg/m, up to 1.4 m/s, 0.3 s per 90° swivel, 30°/45°/90° divert. Hytrol's pivot-wheel platform is specified up to about 90 packages/min and 300 ft/min.</td>
+    <td>Powered wheels rotate to steer items to a side lane without lifting the full product. Needs adequate bottom contact and friction.</td>
+    <td>Interroll RM 8711/8712 official specification; Hytrol Pivot Wheel.</td>
+    <td class="price">Public Hytrol estimate: about US$410 module or US$5,900 per divert; configuration and integration extra.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/008-swivel-pivot-wheel-transfer.mp4"></video><div class="video-meta"><strong>Wheel Sorter/ Swivel Sorter/ Wave Sorter/ Pivot Sorter/ Wheel Diverter/ Roller Switch/ Conveyor</strong><span>Vera Yu</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport activated roller belt / arb transfer angled rollers embedded in a moving belt create lateral velocity, enabling merge, align, rotate and divert. intralox arb. intralox reports thousands of installations and explicitly supports difficult cartons, polybags and irregular items.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Activated Roller Belt / ARB transfer</div><div class="source-line">Source row 177</div></th>
+    <td>Angled rollers embedded in a moving belt create lateral velocity, enabling merge, align, rotate and divert.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Application-specific; Intralox's passive 90° transfer is designed for continuous operation and does not require pneumatic actuation or discrete controls.</td>
+    <td>Integrates like a belt conveyor; active ARB variants use controlled drive sections.</td>
+    <td>Intralox ARB. Intralox reports thousands of installations and explicitly supports difficult cartons, polybags and irregular items.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/009-activated-roller-belt-arb-transfer.mp4"></video><div class="video-meta"><strong>Intralox ARB 90-Degree Transfer Conveyors</strong><span>Intralox</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport pusher / plow divert pneumatic/electric paddle or angled plow pushes an item from the transport conveyor. honeywell, hytrol, dorner and many conveyor integrators; pusher-style sortation remains one of the basic line-sorter mechanisms.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Pusher / plow divert</div><div class="source-line">Source row 178</div></th>
+    <td>Pneumatic/electric paddle or angled plow pushes an item from the transport conveyor.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Best at low-to-medium rate; exact cycle dictated by actuator stroke, item pitch and return time.</td>
+    <td>Pneumatic/electric paddle or angled plow pushes an item from the transport conveyor. Cheap and easy to retrofit; impact and required gap make it poor for fragile goods or extreme throughput.</td>
+    <td>Honeywell, Hytrol, Dorner and many conveyor integrators; pusher-style sortation remains one of the basic line-sorter mechanisms.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/010-pusher-plow-divert.mp4"></video><div class="video-meta"><strong>ELECTRIC SWEEP SORTER by Falcon Autotech</strong><span>FalconAutotech</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport continuous 90° passive transfer geometric belt/roller arrangement changes direction without a cyclic lift actuator. intralox ev 90° passive transfer.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Continuous 90° passive transfer</div><div class="source-line">Source row 179</div></th>
+    <td>Geometric belt/roller arrangement changes direction without a cyclic lift actuator.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Intralox states its EV passive transfer can achieve greater throughput than a conventional pop-up transfer at the same belt speed.</td>
+    <td>No compressed air or transfer-specific controls in the cited implementation; compact and low-maintenance. Less flexible when SKU geometry falls outside its designed range.</td>
+    <td>Intralox EV 90° Passive Transfer.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/011-continuous-90-passive-transfer.mp4"></video><div class="video-meta"><strong>Passive Off DARB Transfer</strong><span>Sentry Equipment &amp; Erectors , Inc.</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport turntable / rotating conveyor rotates a conveyor deck or pallet to change orientation/direction. interroll, dorner, mk, pallet-conveyor integrators. cost: project-specific rfq.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Turntable / rotating conveyor</div><div class="source-line">Source row 180</div></th>
+    <td>Rotates a conveyor deck or pallet to change orientation/direction.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Typically one SKU/pallet per index; footprint roughly governed by load diagonal and guarding.</td>
+    <td>Servo/gearmotor + index switches/safety; positive orientation for heavy loads. Slower and mechanically larger than ARB/skew solutions.</td>
+    <td>Interroll, Dorner, mk, pallet-conveyor integrators. Cost: project-specific RFQ.</td>
+    <td class="price">RFQ; the source catalogue identifies this class as project-specific and public OEM pricing was not posted.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/012-turntable-rotating-conveyor.mp4"></video><div class="video-meta"><strong>Interroll MPP Pallet conveyor System - Available from CSL</strong><span>Conveyor Systems Limited</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport vertical indexing conveyor / lift moves unit loads between elevations, often connecting mezzanine levels. honeywell, qimarox, nerak, interroll integrators. cost: rfq.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Vertical indexing conveyor / lift</div><div class="source-line">Source row 181</div></th>
+    <td>Moves unit loads between elevations, often connecting mezzanine levels.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Payload/rate spans small cartons to pallets; Honeywell identifies vertical indexing conveyors as a standard material-flow category.</td>
+    <td>Throughput can be limited by reciprocating cycle and vertical travel.</td>
+    <td>Honeywell, Qimarox, Nerak, Interroll integrators. Cost: RFQ.</td>
+    <td class="price">RFQ; the source catalogue identifies this class as project-specific and public OEM pricing was not posted.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/013-vertical-indexing-conveyor-lift.mp4"></video><div class="video-meta"><strong>Qimarox Elevator</strong><span>Saturn Packaging Equipment</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport spiral conveyor continuous helical belt/chain changes elevation while maintaining flow. ambaflex, ryson, apollo, intralox-based oems.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Spiral conveyor</div><div class="source-line">Source row 182</div></th>
+    <td>Continuous helical belt/chain changes elevation while maintaining flow.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Application-specific; enables continuous flow versus reciprocating lifts.</td>
+    <td>Large height structure and more difficult maintenance access.</td>
+    <td>AmbaFlex, Ryson, Apollo, Intralox-based OEMs.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/014-spiral-conveyor.mp4"></video><div class="video-meta"><strong>AmbaFlex Spiral Conveyor Portal Solution</strong><span>AmbaFlex Spiral Conveyor Solutions</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport zipper/full-belt/controlled merge synchronizes two or more streams into one controlled pitch. honeywell lists zipper and full-belt merge technologies; beumer emphasizes induction and flow integration as real throughput constraints.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Zipper/full-belt/controlled merge</div><div class="source-line">Source row 183</div></th>
+    <td>Synchronizes two or more streams into one controlled pitch.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Throughput is ultimately set by downstream pitch and line speed.</td>
+    <td>Critical before high-speed sorters; poor metering can become the whole system's bottleneck.</td>
+    <td>Honeywell lists zipper and full-belt merge technologies; BEUMER emphasizes induction and flow integration as real throughput constraints.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/015-zipper-full-belt-controlled-merge.mp4"></video><div class="video-meta"><strong>Conveyor Units Switch Sorter Three Way Merge</strong><span>CONVEYOR UNITS LTD</span></div></td>
+  </tr>
+<tr data-category="Transfer &amp; transport" data-search="transfer &amp; transport pallet/indexed assembly conveyor precision carriers provide repeatable datum surfaces through manufacturing stations. dorner dualmove; bosch rexroth ts systems; flexlink pallet systems.">
+    <td class="category"><span>Transfer &amp; transport</span></td>
+    <th scope="row"><div class="mechanism">Pallet/indexed assembly conveyor</div><div class="source-line">Source row 184</div></th>
+    <td>Precision carriers provide repeatable datum surfaces through manufacturing stations.</td>
+    <td>Indoor industrial conveyor duty; validate load, traction, pitch, guarding and emergency-stop zoning. Typical integration uses photoeyes or encoders, a PLC/WCS and a VFD, servo, pneumatic or MDR drive as applicable. Representative envelope: Dorner DualMove offers standard pallet widths about 160–800 mm, speeds up to 66 m/min and, depending on configuration, pallet capacities around 14–45 kg.</td>
+    <td>RFID/ID tags, stops, lifts, locators, PLC; high positional repeatability at stations. Pallet return and tooling add cost/complexity.</td>
+    <td>Dorner DualMove; Bosch Rexroth TS systems; FlexLink pallet systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/016-pallet-indexed-assembly-conveyor.mp4"></video><div class="video-meta"><strong>DualMove Pallet System Product Overview</strong><span>Dorner Conveyors</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots delta / three-arm parallel robot extremely fast pick from moving belt to tray/carton; food, confectionery, pharma and consumer goods. abb irb 360 flexpicker; fanuc m-series deltas; yaskawa mpp.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Delta / three-arm parallel robot</div><div class="source-line">Source row 190</div></th>
+    <td>Extremely fast pick from moving belt to tray/carton; food, confectionery, pharma and consumer goods.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: ABB IRB 360 variants span roughly 1–8 kg payload with 1,130 or 1,600 mm working diameters.</td>
+    <td>Conveyor encoder + vision trigger + robot tracking; low moving mass gives exceptional acceleration. Restricted orientation/reach compared with six-axis arm.</td>
+    <td>ABB IRB 360 FlexPicker; FANUC M-series deltas; Yaskawa MPP.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/017-delta-three-arm-parallel-robot.mp4"></video><div class="video-meta"><strong>Vanta-ABB IRB 360 FlexPicker Delta Robot Handling Flexible Packaged Goods</strong><span>Vanta intelligent packaging </span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots high-payload delta / flexpacker larger/heavier packaging products, case loading, high-speed secondary packaging. abb irb 390 flexpacker.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">High-payload delta / FlexPacker</div><div class="source-line">Source row 191</div></th>
+    <td>Larger/heavier packaging products, case loading, high-speed secondary packaging.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: ABB IRB 390: up to 15 kg, about 1,300 mm work envelope, four- and five-axis versions, and conveyor-tracking capability at belt speeds up to 100 m/min.</td>
+    <td>Larger/heavier packaging products, case loading, high-speed secondary packaging. Vision + encoder + vacuum/mechanical EOAT; much faster than most serial robots for constrained pick/place.</td>
+    <td>ABB IRB 390 FlexPacker.</td>
+    <td class="price">RFQ; model and cell configuration drive the price. Public OEM pages publish specifications rather than a current list price.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/018-high-payload-delta-flexpacker.mp4"></video><div class="video-meta"><strong>Meet the IRB 390 FlexPacker™</strong><span>ABB Robotics</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots four-arm parallel robot high-speed pick/pack where a larger rectangular working envelope or better orientation control is useful. omron quattro.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Four-arm parallel robot</div><div class="source-line">Source row 192</div></th>
+    <td>High-speed pick/pack where a larger rectangular working envelope or better orientation control is useful.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Omron Quattro uses four-arm parallel kinematics and an 8 kHz servo update architecture; food-compatible S650HS versions are available.</td>
+    <td>High-speed pick/pack where a larger rectangular working envelope or better orientation control is useful.</td>
+    <td>Omron Quattro.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/019-four-arm-parallel-robot.mp4"></video><div class="video-meta"><strong>Omron Quattro Parallel Robot</strong><span>Proax Technologies Ltd.</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots scara fast planar pick/place, assembly, tray loading, machine tending. epson gx8, yamaha/yk, omron i4, fanuc sr. gx8 spec sheet.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">SCARA</div><div class="source-line">Source row 193</div></th>
+    <td>Fast planar pick/place, assembly, tray loading, machine tending.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Epson GX8: 8 kg payload; quoted joint repeatability around ±0.015 mm for J1/J2 and ±0.010 mm on J3; standard cycles around 0.28 s on shorter-reach versions and 0.33 s on 650 mm configuration.</td>
+    <td>PLC/vision/encoder; very small cell, excellent repeatability and cycle rate.</td>
+    <td>Epson GX8, Yamaha/YK, Omron i4, FANUC SR. GX8 spec sheet.</td>
+    <td class="price">RFQ; model and cell configuration drive the price. Public OEM pages publish specifications rather than a current list price.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/020-scara.mp4"></video><div class="video-meta"><strong>Lab Automation Demo (RS3-351S Scara)</strong><span>Epson Robots</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots six-axis industrial articulated robot mixed-sku pick, reorientation, packing, depalletizing, machine loading and exception handling. abb, fanuc, kuka, yaskawa, kawasaki, stäubli. beumer identifies robotic pickers, singulators, packers and palletizers as distinct roles around sortation.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Six-axis industrial articulated robot</div><div class="source-line">Source row 194</div></th>
+    <td>Mixed-SKU pick, reorientation, packing, depalletizing, machine loading and exception handling.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Available from single-digit kg to hundreds of kg. More dexterous but usually slower per pure pick cycle than delta/SCARA.</td>
+    <td>Mixed-SKU pick, reorientation, packing, depalletizing, machine loading and exception handling. Greatest pose freedom; cell guarding and path planning consume more footprint.</td>
+    <td>ABB, FANUC, KUKA, Yaskawa, Kawasaki, Stäubli. BEUMER identifies robotic pickers, singulators, packers and palletizers as distinct roles around sortation.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/021-six-axis-industrial-articulated-robot.mp4"></video><div class="video-meta"><strong>6-Axis Robot Picking Bread</strong><span>AMP Automation</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots dedicated four-axis palletizing robot case, bag, crate and bundle palletizing at end of line. abb irb 460; fanuc m-410; kuka pa; yaskawa pl series.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Dedicated four-axis palletizing robot</div><div class="source-line">Source row 195</div></th>
+    <td>Case, bag, crate and bundle palletizing at end of line.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: ABB IRB 460: 110 kg payload, 2.4 m reach and up to 2,190 cycles/hour with a 60 kg load.</td>
+    <td>Case, bag, crate and bundle palletizing at end of line. Very high palletizing rate; lacks full six-axis dexterity.</td>
+    <td>ABB IRB 460; FANUC M-410; KUKA PA; Yaskawa PL series.</td>
+    <td class="price">RFQ; model and cell configuration drive the price. Public OEM pages publish specifications rather than a current list price.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/022-dedicated-four-axis-palletizing-robot.mp4"></video><div class="video-meta"><strong>ABB IRB 460 Palletizing with stack search simulation</strong><span>OРТХОДОХ</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots heavy/full-layer palletizer whole layers, sacks, heavy cases or industrial loads. abb irb 760; fanuc m-410/500-class; kuka high-payload palletizers.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Heavy/full-layer palletizer</div><div class="source-line">Source row 196</div></th>
+    <td>Whole layers, sacks, heavy cases or industrial loads.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: ABB IRB 760: 450 kg payload, 3.2 m reach, and 880 cycles/hour at full load on ABB's stated cycle.</td>
+    <td>Handles extreme load but requires large guarded envelope and foundation considerations.</td>
+    <td>ABB IRB 760; FANUC M-410/500-class; KUKA high-payload palletizers.</td>
+    <td class="price">RFQ; model and cell configuration drive the price. Public OEM pages publish specifications rather than a current list price.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/023-heavy-full-layer-palletizer.mp4"></video><div class="video-meta"><strong>Abb Irb 760 4-axis Robot  Full Layer Palletizing Material Handling</strong><span>Industry Robot Arm</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots collaborative six-axis robot lower-to-medium-rate case handling, machine tending, packing and palletizing with easier redeployment. universal robots ur series; fanuc crx; abb gofa/swifti; doosan; techman. bob's red mill uses a ur20 palletizing application whose 1,750 mm reach eliminated a vertical seventh-axis lift in that layout. cost: rfq.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Collaborative six-axis robot</div><div class="source-line">Source row 197</div></th>
+    <td>Lower-to-medium-rate case handling, machine tending, packing and palletizing with easier redeployment.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Current UR portfolio spans to 35 kg; UR20 is listed at 25 kg, 1,750 mm reach and a 245 mm base footprint. FANUC CRX-20iA/L provides 20 kg and 1,418 mm reach.</td>
+    <td>Lower-to-medium-rate case handling, machine tending, packing and palletizing with easier redeployment. Smaller integration burden can be attractive, but “collaborative” does not automatically mean unrestricted full-speed human coexistence; the application still needs a safety assessment.</td>
+    <td>Universal Robots UR series; FANUC CRX; ABB GoFa/SWIFTI; Doosan; Techman. Bob's Red Mill uses a UR20 palletizing application whose 1,750 mm reach eliminated a vertical seventh-axis lift in that layout. Cost: RFQ.</td>
+    <td class="price">RFQ; model and cell configuration drive the price. Public OEM pages publish specifications rather than a current list price.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/024-collaborative-six-axis-robot.mp4"></video><div class="video-meta"><strong>Universal Robots UR20 Cobot Palletizing Demo</strong><span>Universal Robots</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots cartesian xy/xyz gantry pick/place over rectangular conveyor areas, palletizing, machine loading, structured packing. bosch rexroth cartesian multi-axis systems; festo, iai, güdel.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Cartesian XY/XYZ gantry</div><div class="source-line">Source row 198</div></th>
+    <td>Pick/place over rectangular conveyor areas, palletizing, machine loading, structured packing.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Bosch Rexroth's configured systems span roughly 10–160 kg for 3D room gantries and travel dimensions up to around 3,000 mm on major axes, depending on configuration.</td>
+    <td>Servo axes, PLC/motion controller, vision; excellent stiffness and rectangular coverage, often simpler kinematics. Structure can occupy substantial overhead volume.</td>
+    <td>Bosch Rexroth Cartesian multi-axis systems; Festo, IAI, Güdel.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/025-cartesian-xy-xyz-gantry.mp4"></video><div class="video-meta"><strong>Single axis robot  FLIP X series  &amp; Cartesian robot  XY X series  YAMAHA</strong><span>Seika Machinery, Inc.</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots robot on linear seventh axis one robot services several conveyor lanes, pallets or stations. abb, fanuc, kuka, güdel, rollon/thomson integrator systems.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Robot on linear seventh axis</div><div class="source-line">Source row 199</div></th>
+    <td>One robot services several conveyor lanes, pallets or stations.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Reach expands by meters; payload and acceleration depend on robot and track.</td>
+    <td>Improves robot utilization but introduces a moving bottleneck and extra safety envelope.</td>
+    <td>ABB, FANUC, KUKA, Güdel, Rollon/Thomson integrator systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/026-robot-on-linear-seventh-axis.mp4"></video><div class="video-meta"><strong>Multiple Job Machine Tending with Yasaka Robot &amp; Linear Track (7th Axis)</strong><span>Yasaka Automation</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots conveyor-tracking robot picks products without stopping the belt. abb, fanuc, epson, omron, ur. universal robots' software includes explicit conveyor-tracking modes.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Conveyor-tracking robot</div><div class="source-line">Source row 200</div></th>
+    <td>Picks products without stopping the belt.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Performance is governed by robot dynamics and encoder/vision latency; ABB publishes conveyor operation to 100 m/min for IRB 390.</td>
+    <td>Picks products without stopping the belt. Excellent throughput because no indexing stop is required; calibration error becomes position error downstream.</td>
+    <td>ABB, FANUC, Epson, Omron, UR. Universal Robots' software includes explicit conveyor-tracking modes.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/027-conveyor-tracking-robot.mp4"></video><div class="video-meta"><strong>How to Create Conveyor Tracking in RobotStudio</strong><span>KOTESO Studio ChanneL</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots vision-guided robotic item picker mixed-sku tote/bin picking to conveyor or order container. knapp pick-it-easy robot; vanderlande smart item robotics; righthand robotics-integrated systems.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Vision-guided robotic item picker</div><div class="source-line">Source row 201</div></th>
+    <td>Mixed-SKU tote/bin picking to conveyor or order container.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: KNAPP reports Pick-it-Easy Robots at eMAG operating at up to 600 picks/hour in a highly varied e-commerce range.</td>
+    <td>Mixed-SKU tote/bin picking to conveyor or order container. Handles SKU diversity without hard tooling, but difficult transparent, reflective, deformable or tightly packed items still need exception strategies.</td>
+    <td>KNAPP Pick-it-Easy Robot; Vanderlande Smart Item Robotics; RightHand Robotics-integrated systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/028-vision-guided-robotic-item-picker.mp4"></video><div class="video-meta"><strong>KNAPP – Pick-it-Easy Robot</strong><span>KNAPP</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots robotic parcel induction/singulation picks one parcel from an unstructured pile/stream and creates one-item flow for downstream scan/sort. amazon robotics robin is the strongest published large-scale deployment found.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">Robotic parcel induction/singulation</div><div class="source-line">Source row 202</div></th>
+    <td>Picks one parcel from an unstructured pile/stream and creates one-item flow for downstream scan/sort.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Amazon's Robin research reports millions of packages/day at fleet scale and production training on hundreds of thousands of picks.</td>
+    <td>Picks one parcel from an unstructured pile/stream and creates one-item flow for downstream scan/sort. Highly flexible for mixed rigid/deformable objects; lower individual-station rate and higher perception complexity than purpose-built mechanical singulators.</td>
+    <td>Amazon Robotics Robin is the strongest published large-scale deployment found.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/029-robotic-parcel-induction-singulation.mp4"></video><div class="video-meta"><strong>Meet the Sparrow Robotic System</strong><span>Inside Amazon</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots amr sorting robot mobile robot carries one item from induction to destination on a floor/grid. tompkins tsort; libiao; fives geni-ant. tompkins reports 30,000+ robots and 300+ global installations.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">AMR sorting robot</div><div class="source-line">Source row 203</div></th>
+    <td>Mobile robot carries one item from induction to destination on a floor/grid.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Tompkins tSort variants span approximately 2.3–30 kg item load and up to 2.0–2.5 m/s. Complete systems are advertised to 40,000 items/hour and 6,000+ destinations.</td>
+    <td>Mobile robot carries one item from induction to destination on a floor/grid.</td>
+    <td>Tompkins tSort; Libiao; Fives GENI-Ant. Tompkins reports 30,000+ robots and 300+ global installations.</td>
+    <td class="price">RFQ; model and cell configuration drive the price. Public OEM pages publish specifications rather than a current list price.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/030-amr-sorting-robot.mp4"></video><div class="video-meta"><strong>Tompkins Robotics t-Sort Robotic Unit and Parcel Sortation System</strong><span>Tompkins Fulfillment Services</span></div></td>
+  </tr>
+<tr data-category="Robots" data-search="robots 3d robotic putwall/sorter mobile/vertical mechanism routes items to dense destinations at multiple heights. tompkins tsort3d.">
+    <td class="category"><span>Robots</span></td>
+    <th scope="row"><div class="mechanism">3D robotic putwall/sorter</div><div class="source-line">Source row 204</div></th>
+    <td>Mobile/vertical mechanism routes items to dense destinations at multiple heights.</td>
+    <td>Guarded industrial cell with safety PLC, validated robot limits, appropriate power, and usually vision, encoder tracking and pneumatic/vacuum utilities for the end effector. Duty cycle and payload must be validated with the actual tool and SKU mix. Representative envelope: Tompkins tSort3D: up to 450 units/hour per module, 5 kg item payload, max item about 406 × 330 × 330 mm; module roughly 2.5 m × 0.635 m × 2.2 m.</td>
+    <td>Mobile/vertical mechanism routes items to dense destinations at multiple heights.</td>
+    <td>Tompkins tSort3D.</td>
+    <td class="price">RFQ; model and cell configuration drive the price. Public OEM pages publish specifications rather than a current list price.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/031-3d-robotic-putwall-sorter.mp4"></video><div class="video-meta"><strong>Musinsa introduces latest 3D sorting system of its warehouse</strong><span>Libiao Robotics</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding brake/meter-belt singulation sequential belts at controlled velocity ratios create spacing. honeywell lists brake/meter technology within parcel-handling ip.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Brake/meter-belt singulation</div><div class="source-line">Source row 210</div></th>
+    <td>Sequential belts at controlled velocity ratios create spacing.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Throughput depends on required gap, item length and downstream velocity.</td>
+    <td>Overlaps and side-by-side parcels require additional stages.</td>
+    <td>Honeywell lists brake/meter technology within parcel-handling IP.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/032-brake-meter-belt-singulation.mp4"></video><div class="video-meta"><strong>Metering Conveyor 2</strong><span>wmk463</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding skewed-roller singulator angled rollers establish lateral reference while differential zones create longitudinal gaps. interroll/honeywell/dematic/vanderlande integrator solutions.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Skewed-roller singulator</div><div class="source-line">Source row 211</div></th>
+    <td>Angled rollers establish lateral reference while differential zones create longitudinal gaps.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Application-specific.</td>
+    <td>Can mishandle polybags/round items or unstable bottoms.</td>
+    <td>Interroll/Honeywell/Dematic/Vanderlande integrator solutions.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/033-skewed-roller-singulator.mp4"></video><div class="video-meta"><strong>Crown Plastics Bearingless Singulator Rollers - Visicon</strong><span>Crown Plastics</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding multi-belt parcel singulator matrix of independently controlled short belt zones resolves a bulk flow into one aligned stream. beumer automatic parcel singulator; fives geni-hive; honeywell aps.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Multi-belt parcel singulator</div><div class="source-line">Source row 212</div></th>
+    <td>Matrix of independently controlled short belt zones resolves a bulk flow into one aligned stream.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: BEUMER's Automatic Parcel Singulator is rated to about 3,500 items/hour depending on induction conditions.</td>
+    <td>Vision/sensor array, many variable-speed drives, high-level controls. Excellent mixed-parcel automation; higher mechanical/control complexity than metering belts.</td>
+    <td>BEUMER Automatic Parcel Singulator; Fives GENI-Hive; Honeywell APS.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/034-multi-belt-parcel-singulator.mp4"></video><div class="video-meta"><strong>Automatic Parcel Singulator</strong><span>BEUMER Group TV</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding robotic singulator robot selects a pickable item from clutter and places it at a known destination/gap. amazon robin; vanderlande robot-singulation development.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Robotic singulator</div><div class="source-line">Source row 213</div></th>
+    <td>Robot selects a pickable item from clutter and places it at a known destination/gap.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Fleet-scale production demonstrated by Amazon; later Robin publication reports up to about 6 million package picks/day across the fleet and more than 2 billion historical manipulations at the time of writing.</td>
+    <td>Robot selects a pickable item from clutter and places it at a known destination/gap. Vision/ML + suction + collision avoidance; much more SKU-tolerant than fixed tooling. Pick-failure/recovery strategy is critical.</td>
+    <td>Amazon Robin; Vanderlande robot-singulation development.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/035-robotic-singulator.mp4"></video><div class="video-meta"><strong>AI powered robotic parcel singulation demo</strong><span>intrion</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding vibratory bowl feeder helical bowl uses controlled vibration and tooling to reject incorrectly oriented parts until only desired poses remain. rna, weber, afag, moorfeed, deprag. weber zeb is designed for screws, nuts, pins, washers, caps and related parts.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Vibratory bowl feeder</div><div class="source-line">Source row 214</div></th>
+    <td>Helical bowl uses controlled vibration and tooling to reject incorrectly oriented parts until only desired poses remain.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Rates range from a few to hundreds of parts/min depending on part. RNA's examples span 6/min for difficult ceramic pins to 400/min for rivet pins.</td>
+    <td>Tooling is SKU-specific and changeover is poor.</td>
+    <td>RNA, Weber, Afag, Moorfeed, DEPRAG. Weber ZEB is designed for screws, nuts, pins, washers, caps and related parts.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/036-vibratory-bowl-feeder.mp4"></video><div class="video-meta"><strong>RNA Automation Vibratory feeder</strong><span>Ying Zhang</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding centrifugal feeder rotating disc/ring transports parts outward and uses mechanical/vision tooling for orientation without bowl vibration. rna centrifugal systems; hoosier feeder; service engineering. rna brochure.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Centrifugal feeder</div><div class="source-line">Source row 215</div></th>
+    <td>Rotating disc/ring transports parts outward and uses mechanical/vision tooling for orientation without bowl vibration.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: RNA cites capability up to 3,000 parts/min in suitable applications. Production examples include 300 capsules/min and 400 fruit bars/min.</td>
+    <td>Servo/VFD + sensors/vision; exceptionally high rate and relatively gentle motion.</td>
+    <td>RNA centrifugal systems; Hoosier Feeder; Service Engineering. RNA brochure.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/037-centrifugal-feeder.mp4"></video><div class="video-meta"><strong>RNA Centrifugal Feeder in Action - RNA Automation Ltd</strong><span>RNA Automation Ltd</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding step feeder oscillating/stepped plates lift bulk components in controlled layers toward an outlet track. weber zel; rna step feeders.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Step feeder</div><div class="source-line">Source row 216</div></th>
+    <td>Oscillating/stepped plates lift bulk components in controlled layers toward an outlet track.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Weber ZEL cites cycle intervals as short as approximately 0.8 s and integrated sensor capability.</td>
+    <td>Still requires part-family tooling.</td>
+    <td>Weber ZEL; RNA step feeders.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/038-step-feeder.mp4"></video><div class="video-meta"><strong>ZEL Step Feeder</strong><span>WEBER Screwdriving Systems Inc.</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding linear vibratory feeder vibrating rail moves already oriented parts from feeder to workstation and can buffer them. rna, weber, afag.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Linear vibratory feeder</div><div class="source-line">Source row 217</div></th>
+    <td>Vibrating rail moves already oriented parts from feeder to workstation and can buffer them.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Rate depends on track and part.</td>
+    <td>Requires pre-orientation.</td>
+    <td>RNA, Weber, Afag.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/039-linear-vibratory-feeder.mp4"></video><div class="video-meta"><strong>Test of FEDA linear feeder automatic vibration feeder</strong><span>FEDA Machine</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding multi-lane linear feeder parallel tracks create multiple high-rate lanes downstream of bulk orientation. rna flextype.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Multi-lane linear feeder</div><div class="source-line">Source row 218</div></th>
+    <td>Parallel tracks create multiple high-rate lanes downstream of bulk orientation.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: RNA FlexType cites rates up to 2,500 parts/min and changeover under one minute for suitable applications.</td>
+    <td>Parallel tracks create multiple high-rate lanes downstream of bulk orientation. Massive throughput but part/tool family still constrains flexibility.</td>
+    <td>RNA FlexType.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/040-multi-lane-linear-feeder.mp4"></video><div class="video-meta"><strong>FlexType R Handling Bags of Mustard, Curry, Wood Skewers - RNA Automation Ltd</strong><span>RNA Automation Ltd</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding flexible programmable feeder tray/platform uses programmable vibration to separate and move mixed or changing parts while overhead vision determines poses. asyril asycube 50/80/240/380/530; ars flexibowl is a competing concept. asycube data sheet.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Flexible programmable feeder</div><div class="source-line">Source row 219</div></th>
+    <td>Tray/platform uses programmable vibration to separate and move mixed or changing parts while overhead vision determines poses.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Asyril Asycube family covers roughly 0.1–150 mm parts. Asycube 240 handles about 5–40 mm parts on a 195 × 150 mm platform; overall footprint about 300 × 171 × 132 mm.</td>
+    <td>Tray/platform uses programmable vibration to separate and move mixed or changing parts while overhead vision determines poses. Fast changeover and no dedicated bowl tooling; generally slower than optimized centrifugal/bowl solutions.</td>
+    <td>Asyril Asycube 50/80/240/380/530; Ars FlexiBowl is a competing concept. Asycube data sheet.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/041-flexible-programmable-feeder.mp4"></video><div class="video-meta"><strong>Asycube Series | Flexible Feeding Systems</strong><span>Asyril</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding vision-controlled flexible feeder cell feeder plus camera/controller exports robot-ready part coordinates. asyril eye+ / asycube.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Vision-controlled flexible feeder cell</div><div class="source-line">Source row 220</div></th>
+    <td>Feeder plus camera/controller exports robot-ready part coordinates.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Asyril EYE+ uses a 6.3 MP camera and supports industrial interfaces including EtherCAT, EtherNet/IP and PROFINET.</td>
+    <td>Reduces custom vision programming and simplifies robot integration. Added controller/camera cost versus conventional bowl.</td>
+    <td>Asyril EYE+ / Asycube.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/042-vision-controlled-flexible-feeder-cell.mp4"></video><div class="video-meta"><strong>Tutorial: Setting up a new part to run on a Asycube feeder from Asyril using the Eye + vision system</strong><span>BlueBay Automation</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding escapement stops a queue and releases exactly one part or package per cycle. packaging-machine oems, feeder suppliers.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Escapement</div><div class="source-line">Source row 221</div></th>
+    <td>Stops a queue and releases exactly one part or package per cycle.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Cycle is usually pneumatic/servo stroke limited.</td>
+    <td>Proximity/photoelectric sensor + PLC; simple and accurate. Requires repeatable object geometry and creates contact.</td>
+    <td>Packaging-machine OEMs, feeder suppliers.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/043-escapement.mp4"></video><div class="video-meta"><strong>Escapements and Mechanisms for Precision Parts Feeding | End-of-Line Solutions Explained</strong><span>Hoosier Feeder</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding star wheel rotating pockets impose precise pitch and orientation on bottles/cans. krones, sidel, syntegon and packaging oems.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Star wheel</div><div class="source-line">Source row 222</div></th>
+    <td>Rotating pockets impose precise pitch and orientation on bottles/cans.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: Can synchronize very high-speed packaging/filling lines when SKU diameter is controlled.</td>
+    <td>Requires change parts for diameter/profile.</td>
+    <td>Krones, Sidel, Syntegon and packaging OEMs.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/044-star-wheel.mp4"></video><div class="video-meta"><strong>Bottle transfer attachment for cartoning machine 80 bottles per min</strong><span>Possible Engineering &amp; Automation</span></div></td>
+  </tr>
+<tr data-category="Singulation &amp; feeding" data-search="singulation &amp; feeding timing screw / feed screw variable-pitch screw accelerates/decelerates containers into exact spacing. packaging-machine oems; typically custom to container geometry.">
+    <td class="category"><span>Singulation &amp; feeding</span></td>
+    <th scope="row"><div class="mechanism">Timing screw / feed screw</div><div class="source-line">Source row 223</div></th>
+    <td>Variable-pitch screw accelerates/decelerates containers into exact spacing.</td>
+    <td>Clean, controlled industrial flow with sensors and adjustable drives or feeder controls. Provide jam access, level monitoring and recipe/changeover controls; hygienic or washdown construction must be specified separately where required. Representative envelope: High-rate continuous packaging applications.</td>
+    <td>Variable-pitch screw accelerates/decelerates containers into exact spacing.</td>
+    <td>Packaging-machine OEMs; typically custom to container geometry.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/045-timing-screw-feed-screw.mp4"></video><div class="video-meta"><strong>Flexible machinery that accommodates varied application and container types</strong><span>Morrison Container Handling Solutions</span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation side guides / passive rail alignment moves sku toward a datum edge. used throughout packaging and conveyor systems.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">Side guides / passive rail alignment</div><div class="source-line">Source row 229</div></th>
+    <td>Moves SKU toward a datum edge.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: Essentially line-speed capable; negligible actuator cycle.</td>
+    <td>Moves SKU toward a datum edge. Generates rubbing and cannot actively choose orientation.</td>
+    <td>Used throughout packaging and conveyor systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/046-side-guides-passive-rail-alignment.mp4"></video><div class="video-meta"><strong>ASGCO® Dual Return Tracking Idler-Installation Guide</strong><span>ASGCO Complete Conveyor Solutions</span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation skewed rollers roller axes at an angle generate lateral velocity while conveying forward. interroll/hytrol/dematic/honeywell conveyor systems.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">Skewed rollers</div><div class="source-line">Source row 230</div></th>
+    <td>Roller axes at an angle generate lateral velocity while conveying forward.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: Continuous-flow; envelope depends on roller width and skew angle.</td>
+    <td>Roller axes at an angle generate lateral velocity while conveying forward. Simple and fast; needs a suitable bottom surface and can rotate unstable products unintentionally.</td>
+    <td>Interroll/Hytrol/Dematic/Honeywell conveyor systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/047-skewed-rollers.mp4"></video><div class="video-meta"><strong>Belt Driven Roller NBC Skew Bed</strong><span>Conveyco</span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation arb aligner embedded angled rollers actively move products laterally to one datum or centerline. intralox arb systems are explicitly used for alignment and varied-item handling.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">ARB aligner</div><div class="source-line">Source row 231</div></th>
+    <td>Embedded angled rollers actively move products laterally to one datum or centerline.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: Continuous-flow and suited to irregular items.</td>
+    <td>Embedded angled rollers actively move products laterally to one datum or centerline. Controlled/geometry-driven; no robot cycle.</td>
+    <td>Intralox ARB systems are explicitly used for alignment and varied-item handling.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/048-arb-aligner.mp4"></video><div class="video-meta"><strong>Intralox ARB Aligner/Alignment Conveyor In Action At Our Shop!</strong><span>Norpak Handling Limited</span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation arb rotate-and-divert differential lateral motion rotates 90° while transferring, or diverts without rotation. intralox arb.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">ARB rotate-and-divert</div><div class="source-line">Source row 232</div></th>
+    <td>Differential lateral motion rotates 90° while transferring, or diverts without rotation.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: Orientation can be changed during a 90° divert or maintained, depending on layout.</td>
+    <td>Elegant simultaneous transfer/orientation; SKU friction/geometry must be tested.</td>
+    <td>Intralox ARB.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/049-arb-rotate-and-divert.mp4"></video><div class="video-meta"><strong>Dual Bump Turn ARB Conveyor</strong><span>Arrow Conveyor Equipment Inc. </span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation bump-turn / corner-turn leading corner contacts stop/guide, causing case to rotate as conveyor continues. case-packaging conveyor oems.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">Bump-turn / corner-turn</div><div class="source-line">Source row 233</div></th>
+    <td>Leading corner contacts stop/guide, causing case to rotate as conveyor continues.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: Very high simplicity and small footprint.</td>
+    <td>Leading corner contacts stop/guide, causing case to rotate as conveyor continues. Passive or one small actuator; low cost but relies strongly on case geometry/friction and creates impact.</td>
+    <td>Case-packaging conveyor OEMs.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/050-bump-turn-corner-turn.mp4"></video><div class="video-meta"><strong>Dual Bump Turn ARB Conveyor</strong><span>Arrow Conveyor Equipment Inc. </span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation turntable/index table positive commanded rotation through 90°, 180° or arbitrary programmed angle. interroll/dorner/custom pallet systems.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">Turntable/index table</div><div class="source-line">Source row 234</div></th>
+    <td>Positive commanded rotation through 90°, 180° or arbitrary programmed angle.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: One unit per index; cycle generally slower than continuous aligners.</td>
+    <td>Positive commanded rotation through 90°, 180° or arbitrary programmed angle. High orientation certainty; larger mechanism and stop/start dynamics.</td>
+    <td>Interroll/Dorner/custom pallet systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/051-turntable-index-table.mp4"></video><div class="video-meta"><strong>Interroll MPP Pallet conveyor System - Available from CSL</strong><span>Conveyor Systems Limited</span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation twist / inversion belt conveyor opposed belts or rails gradually roll/flip a carton, pouch or product. food and packaging-line specialists.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">Twist / inversion belt conveyor</div><div class="source-line">Source row 235</div></th>
+    <td>Opposed belts or rails gradually roll/flip a carton, pouch or product.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: Continuous; footprint proportional to twist length.</td>
+    <td>Opposed belts or rails gradually roll/flip a carton, pouch or product. No robot required; highly repeatable for one envelope but less SKU-flexible.</td>
+    <td>Food and packaging-line specialists.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/052-twist-inversion-belt-conveyor.mp4"></video><div class="video-meta"><strong>Twist Conveyor</strong><span>CarrylineUSA : A Division of IMS</span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation feeder tooling orientation physical tracks reject or turn components into a defined presentation. rna, weber, afag.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">Feeder tooling orientation</div><div class="source-line">Source row 236</div></th>
+    <td>Physical tracks reject or turn components into a defined presentation.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: RNA centrifugal examples reach hundreds/min and higher.</td>
+    <td>Extremely fast and deterministic; costly tooling for high-mix products.</td>
+    <td>RNA, Weber, Afag.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/053-feeder-tooling-orientation.mp4"></video><div class="video-meta"><strong>Vibratory Feeder Bowl for Copper Sizers | Custom Parts Feeding</strong><span>Hoosier Feeder</span></div></td>
+  </tr>
+<tr data-category="Orientation" data-search="orientation robot reorientation vision-guided gripper picks an arbitrary pose and places a commanded pose. abb/fanuc/epson/omron/kuka/ur and ai item-picking suppliers.">
+    <td class="category"><span>Orientation</span></td>
+    <th scope="row"><div class="mechanism">Robot reorientation</div><div class="source-line">Source row 237</div></th>
+    <td>Vision-guided gripper picks an arbitrary pose and places a commanded pose.</td>
+    <td>Continuous conveyor or indexed operation with controlled friction, guides and safe access to pinch points. Verify torque, center of gravity, surface friction and orientation recovery using representative production SKUs. Representative envelope: Depends on arm; SCARA/delta fastest for limited orientations, six-axis for arbitrary poses.</td>
+    <td>Highest flexibility and recipe-based changeover; cycle time and grasp robustness become constraints.</td>
+    <td>ABB/FANUC/Epson/Omron/KUKA/UR and AI item-picking suppliers.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/054-robot-reorientation.mp4"></video><div class="video-meta"><strong>Yamaha robot vision reorientation</strong><span>factrl</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering zero-pressure accumulation roller queue cartons/totes without contact. hytrol ezlogic; interroll rollerdrive zpa; itoh denki.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Zero-pressure accumulation roller</div><div class="source-line">Source row 243</div></th>
+    <td>Queue cartons/totes without contact.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: One controlled zone generally holds one unit. Hytrol EZLogic uses product sensors to control zones.</td>
+    <td>Queue cartons/totes without contact.</td>
+    <td>Hytrol EZLogic; Interroll RollerDrive ZPA; Itoh Denki.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/055-zero-pressure-accumulation-roller.mp4"></video><div class="video-meta"><strong>Hytrol Zero Pressure Accumulation Conveyor with EZLogic</strong><span>Advanced Equipment Company</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering minimum-pressure accumulation allows light controlled contact between adjacent cartons. hytrol and conventional conveyor oems.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Minimum-pressure accumulation</div><div class="source-line">Source row 244</div></th>
+    <td>Allows light controlled contact between adjacent cartons.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: Line-specific.</td>
+    <td>Allows light controlled contact between adjacent cartons. Fewer controls than ZPA and often cheaper; not ideal for fragile products or variable soft packages.</td>
+    <td>Hytrol and conventional conveyor OEMs.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/056-minimum-pressure-accumulation.mp4"></video><div class="video-meta"><strong>Hybrid Low Pressure Accumulation Belt Conveyor | Conveyor Automation Solutions</strong><span>Dynamic Conveyor Corporation</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering slug accumulation holds an entire contiguous group and releases it as one controlled batch. packaging conveyor integrators.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Slug accumulation</div><div class="source-line">Source row 245</div></th>
+    <td>Holds an entire contiguous group and releases it as one controlled batch.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: Buffer length dictates capacity.</td>
+    <td>Stopping a dense slug requires traction/braking analysis.</td>
+    <td>Packaging conveyor integrators.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/057-slug-accumulation.mp4"></video><div class="video-meta"><strong>Zero Pressure Accumulation Conveyor</strong><span>IndustrialKinetics</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering recirculating accumulation table products circulate until downstream machinery accepts them. garvey accumulation tables.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Recirculating accumulation table</div><div class="source-line">Source row 246</div></th>
+    <td>Products circulate until downstream machinery accepts them.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: Garvey offers circular, rectangular and customized accumulation configurations.</td>
+    <td>Products circulate until downstream machinery accepts them. Conveyor/table drives and level sensors; excellent decoupling of packaging machines, but random product residence time and product contact may occur.</td>
+    <td>Garvey accumulation tables.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/058-recirculating-accumulation-table.mp4"></video><div class="video-meta"><strong>A Pressureless Infinity Accumulation Table Handling 12 OZ Craft Beer Bottles</strong><span>garveycorp</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering bi-directional / bi-flo table adjacent belt/table sections move in opposite directions to create a recirculating buffer. garvey bi-flo.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Bi-directional / Bi-Flo table</div><div class="source-line">Source row 247</div></th>
+    <td>Adjacent belt/table sections move in opposite directions to create a recirculating buffer.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: Capacity depends on table plan area.</td>
+    <td>More contact and less deterministic first-in-first-out behavior than dedicated dynamic buffers.</td>
+    <td>Garvey Bi-Flo.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/059-bi-directional-bi-flo-table.mp4"></video><div class="video-meta"><strong>Bagels on a Garvey Bi Flo Accumulation Table</strong><span>garveycorp</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering mass-flow accumulation table broad conveyor/table allows dense product accumulation and redistributes pressure. garvey infinity/3d infinity.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Mass-flow accumulation table</div><div class="source-line">Source row 248</div></th>
+    <td>Broad conveyor/table allows dense product accumulation and redistributes pressure.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: Garvey cites Infinity applications exceeding 300 products/min.</td>
+    <td>Broad conveyor/table allows dense product accumulation and redistributes pressure. Requires product stability/contact tolerance.</td>
+    <td>Garvey Infinity/3D Infinity.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/060-mass-flow-accumulation-table.mp4"></video><div class="video-meta"><strong>Vial Drying System for Liquid Filled Vials</strong><span>garveycorp</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering dynamic spiral / loop accumulator continuously varies the amount of conveyor path occupied, maintaining first-in-first-out flow. ambaflex accuveyor.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Dynamic spiral / loop accumulator</div><div class="source-line">Source row 249</div></th>
+    <td>Continuously varies the amount of conveyor path occupied, maintaining first-in-first-out flow.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: AmbaFlex AccuVeyor AVh: belt about 140–200 mm wide, up to 15 kg/m, 40 m/min, approximately 115 m maximum accumulation length and published footprint down to about 2.2 m².</td>
+    <td>Sensors + servo/VFD + controls; excellent buffer density and gentle first-in-first-out flow. More mechanically complex/capital intensive.</td>
+    <td>AmbaFlex AccuVeyor.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/061-dynamic-spiral-loop-accumulator.mp4"></video><div class="video-meta"><strong>AmbaFlex AccuVeyor AVx - Dynamic Accumulator -</strong><span>AmbaFlex Spiral Conveyor Solutions</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering vertical spiral buffer uses building height instead of floor area to accumulate product. ambaflex, ryson, apollo.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Vertical spiral buffer</div><div class="source-line">Source row 250</div></th>
+    <td>Uses building height instead of floor area to accumulate product.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: Product and geometry dependent; packaging use cases can run hundreds of products/min. AmbaFlex has documented can-line applications around 800 cans/min.</td>
+    <td>Uses building height instead of floor area to accumulate product. Good floor-space economy; height complicates maintenance and product recovery.</td>
+    <td>AmbaFlex, Ryson, Apollo.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/062-vertical-spiral-buffer.mp4"></video><div class="video-meta"><strong>AccuVeyor AVh - Dynamic Accumulation - Pouches</strong><span>AmbaFlex Spiral Conveyor Solutions</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering pocket/pouch buffer each sku hangs in an individually tracked carrier; carriers can be buffered and resequenced. knapp ecopocket/autopocket; vanderlande airpick; beumer pouch systems.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Pocket/pouch buffer</div><div class="source-line">Source row 251</div></th>
+    <td>Each SKU hangs in an individually tracked carrier; carriers can be buffered and resequenced.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: KNAPP reports more than 50 pocket systems with more than five million pockets worldwide; RFID enables individual tracking in its EcoPocket architecture.</td>
+    <td>Each SKU hangs in an individually tracked carrier; carriers can be buffered and resequenced. Loading/unloading and pouch compatibility constrain item envelope.</td>
+    <td>KNAPP EcoPocket/AutoPocket; Vanderlande AIRPICK; BEUMER pouch systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/063-pocket-pouch-buffer.mp4"></video><div class="video-meta"><strong>Decathlon optimizes logistics with EcoPocket® system|Germany</strong><span>DFT.</span></div></td>
+  </tr>
+<tr data-category="Accumulation &amp; buffering" data-search="accumulation &amp; buffering robotic/mobile buffer amrs or mobile carriers temporarily hold and route skus rather than keeping them on a conveyor. tompkins tsort architecture can dynamically route any inducted item to any destination.">
+    <td class="category"><span>Accumulation &amp; buffering</span></td>
+    <th scope="row"><div class="mechanism">Robotic/mobile buffer</div><div class="source-line">Source row 252</div></th>
+    <td>AMRs or mobile carriers temporarily hold and route SKUs rather than keeping them on a conveyor.</td>
+    <td>Sensor- or level-controlled buffering with jam recovery and safe restart. Product stability, contact pressure, residence time and accumulation density must be tested at peak arrival patterns. Representative envelope: Scales by carrier count.</td>
+    <td>AMRs or mobile carriers temporarily hold and route SKUs rather than keeping them on a conveyor.</td>
+    <td>Tompkins tSort architecture can dynamically route any inducted item to any destination.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/064-robotic-mobile-buffer.mp4"></video><div class="video-meta"><strong>World’s most advanced robotic warehouse (AI automation)</strong><span>Brightpick</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting pusher sorter actuated paddle pushes sku sideways. honeywell, hytrol, integrators. cost: rfq.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Pusher sorter</div><div class="source-line">Source row 260</div></th>
+    <td>Actuated paddle pushes SKU sideways.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Low/medium throughput; gap required.</td>
+    <td>Actuated paddle pushes SKU sideways. − Impact, finite reset time, poor for fragile/unstable SKUs.</td>
+    <td>Honeywell, Hytrol, integrators. Cost: RFQ.</td>
+    <td class="price">RFQ; the source catalogue identifies this class as project-specific and public OEM pricing was not posted.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/065-pusher-sorter.mp4"></video><div class="video-meta"><strong>ELECTRIC SWEEP SORTER by Falcon Autotech</strong><span>FalconAutotech</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting sweeper sorter sweeping arm/paddle directs sku across conveyor. honeywell includes sweeper sorters in its portfolio.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Sweeper sorter</div><div class="source-line">Source row 261</div></th>
+    <td>Sweeping arm/paddle directs SKU across conveyor.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Medium-rate application-dependent.</td>
+    <td>Sweeping arm/paddle directs SKU across conveyor. + Broad contact area. − Moving arm and contact can constrain speed.</td>
+    <td>Honeywell includes sweeper sorters in its portfolio.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/066-sweeper-sorter.mp4"></video><div class="video-meta"><strong>Sweeper Sorter - Conveyco</strong><span>Conveyco</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting pop-up/swivel wheel sorter powered wheels rise/swivel to steer item. honeywell smartsort; hytrol pivot wheel; interroll hpd.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Pop-up/swivel wheel sorter</div><div class="source-line">Source row 262</div></th>
+    <td>Powered wheels rise/swivel to steer item.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Honeywell SmartSort swivel-wheel class is stated at roughly 8,000+ units/hour for suitable goods.</td>
+    <td>Powered wheels rise/swivel to steer item. − Bottom geometry/contact limitations.</td>
+    <td>Honeywell SmartSort; Hytrol Pivot Wheel; Interroll HPD.</td>
+    <td class="price">Public Hytrol estimate: about US$410 module or US$5,900 per divert; configuration and integration extra.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/067-pop-up-swivel-wheel-sorter.mp4"></video><div class="video-meta"><strong>Swivel Wheel Sorter</strong><span>Mohammad Safarabadi</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting narrow-belt sorter multiple longitudinal belts with pop-up rollers redirect items. hytrol nbs, honeywell narrow/strip-belt architectures.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Narrow-belt sorter</div><div class="source-line">Source row 263</div></th>
+    <td>Multiple longitudinal belts with pop-up rollers redirect items.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Hytrol supports 30°/90° transfer arrangements.</td>
+    <td>Multiple longitudinal belts with pop-up rollers redirect items. − Less suitable for extreme parcel-sort hub rates than shoe/cross-belt.</td>
+    <td>Hytrol NBS, Honeywell narrow/strip-belt architectures.</td>
+    <td class="price">Public Hytrol estimate: about US$540 module or US$4,500–6,600 per divert, depending on 30°/90° layout; configuration and integration extra.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/068-narrow-belt-sorter.mp4"></video><div class="video-meta"><strong>Hytrol's ProSort MRT</strong><span>Hytrol</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting strip-belt sorter narrow controlled belts accelerate the item sideways at discharge. honeywell lists strip-belt sortation among its system types.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Strip-belt sorter</div><div class="source-line">Source row 264</div></th>
+    <td>Narrow controlled belts accelerate the item sideways at discharge.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Medium-to-high depending design.</td>
+    <td>Narrow controlled belts accelerate the item sideways at discharge. − More belt components and careful tracking required.</td>
+    <td>Honeywell lists strip-belt sortation among its system types.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/069-strip-belt-sorter.mp4"></video><div class="video-meta"><strong>Hytrol Prosort MRT conveyor, Hytrol Conveyor Co</strong><span>HCM Systems</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting sliding-shoe sorter shoes travel with the conveyor and are switched diagonally across slats to gently push products into chutes. hytrol prosort; honeywell hds; vanderlande posisorter; dematic.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Sliding-shoe sorter</div><div class="source-line">Source row 265</div></th>
+    <td>Shoes travel with the conveyor and are switched diagonally across slats to gently push products into chutes.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Hytrol ProSort models are documented in the ~175–225 parcels/min range depending on configuration/product; belt velocity can reach 600 ft/min in some Hytrol designs.</td>
+    <td>Shoes travel with the conveyor and are switched diagonally across slats to gently push products into chutes. − Long linear footprint and many mechanical carrier/shoe components.</td>
+    <td>Hytrol ProSort; Honeywell HDS; Vanderlande POSISORTER; Dematic.</td>
+    <td class="price">Public Hytrol estimate: about US$1,700 module or US$2,500 per divert; configuration and integration extra.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/070-sliding-shoe-sorter.mp4"></video><div class="video-meta"><strong>Ask Hytrol: How to replace slats and shoes on the ProSort 400 Elite</strong><span>Hytrol</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting high-capacity shoe sorter parcel-specific high-speed sliding shoe. vanderlande posisorter / posisorter hc.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">High-capacity shoe sorter</div><div class="source-line">Source row 266</div></th>
+    <td>Parcel-specific high-speed sliding shoe.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Vanderlande POSISORTER HC is rated at 18,000 parcels/hour by the manufacturer/product literature; the design uses controlled “soft shoe” motion.</td>
+    <td>+ High rate, robust regular-parcel handling.</td>
+    <td>Vanderlande POSISORTER / POSISORTER HC.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/071-high-capacity-shoe-sorter.mp4"></video><div class="video-meta"><strong>Vanderlande POSISORTER</strong><span>Vanderlande</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting large-parcel shoe sorter heavy-duty shoe/slat system designed for bigger/heavier parcels. hytrol prosort 1400 lp.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Large-parcel shoe sorter</div><div class="source-line">Source row 267</div></th>
+    <td>Heavy-duty shoe/slat system designed for bigger/heavier parcels.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Hytrol ProSort 1400 LP handles products from roughly 4 × 6 in to 55 × 96 in, up to 150 lb and conveyor speeds to 350 ft/min.</td>
+    <td>+ Extends automated sort to bulky parcels. − Bigger mechanisms, chutes and safety clearances.</td>
+    <td>Hytrol ProSort 1400 LP.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/072-large-parcel-shoe-sorter.mp4"></video><div class="video-meta"><strong>Hytrol ProSort 131 High Speed Sortation Conveyor</strong><span>Cisco-Eagle</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting horizontal cross-belt sorter individual carriers each have a small transverse belt that loads/discharges items to either side. interroll crossbelt mx-h; beumer bg; vanderlande crossorter; fives geni-belt; honeywell; dematic.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Horizontal cross-belt sorter</div><div class="source-line">Source row 268</div></th>
+    <td>Individual carriers each have a small transverse belt that loads/discharges items to either side.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Interroll MX-H: up to 2.7 m/s, roughly 4,000–20,000 items/hour, item load to 50 kg. Fives GENI-Belt: up to 3 m/s, items to 80 kg/1,500 mm, published 99.99% sorting accuracy.</td>
+    <td>Individual carriers each have a small transverse belt that loads/discharges items to either side. + Huge SKU envelope, accurate gentle discharge, many destinations. − High capital and loop footprint; induction quality crucial.</td>
+    <td>Interroll Crossbelt MX-H; BEUMER BG; Vanderlande CROSSORTER; Fives GENI-Belt; Honeywell; Dematic.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/073-horizontal-cross-belt-sorter.mp4"></video><div class="video-meta"><strong>Interroll Crossbelt Sorter</strong><span>Interroll</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting vertical cross-belt sorter cross-belt carriers operate in a vertically compact loop. interroll mx-vs and other vertical cross-belt suppliers.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Vertical cross-belt sorter</div><div class="source-line">Source row 269</div></th>
+    <td>Cross-belt carriers operate in a vertically compact loop.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Interroll MX-Vs: roughly 2,000–10,000 items/hour, up to 1.3 m/s, item envelope to about 800 × 400 × 400 mm.</td>
+    <td>Cross-belt carriers operate in a vertically compact loop. − More constrained item size and access than large horizontal loops.</td>
+    <td>Interroll MX-Vs and other vertical cross-belt suppliers.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/074-vertical-cross-belt-sorter.mp4"></video><div class="video-meta"><strong>High Speed Sortation System for Courier Express and Parcel Companies</strong><span>FalconAutotech</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting tilt-tray sorter item rides on tray that tilts at destination. honeywell tilt-tray; beumer; vanderlande; dematic.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Tilt-tray sorter</div><div class="source-line">Source row 270</div></th>
+    <td>Item rides on tray that tilts at destination.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Honeywell publishes throughput to about 27,000/hour for its tilt-tray class.</td>
+    <td>Item rides on tray that tilts at destination. − Item must survive controlled slide/fall; tray occupancy limits capacity.</td>
+    <td>Honeywell Tilt-Tray; BEUMER; Vanderlande; Dematic.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/075-tilt-tray-sorter.mp4"></video><div class="video-meta"><strong>IntelliSort® Tilt-tray | Honeywell Intelligrated</strong><span>Honeywell Intelligrated</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting push-tray sorter tray carries item; active plate/belt pushes it sideways rather than tilting. honeywell push-tray.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Push-tray sorter</div><div class="source-line">Source row 271</div></th>
+    <td>Tray carries item; active plate/belt pushes it sideways rather than tilting.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Honeywell reports up to ~24,000 items/hour and an item range from very light polybags around 200 g to cartons around 20 kg for the cited platform.</td>
+    <td>Tray carries item; active plate/belt pushes it sideways rather than tilting. + Better control of lightweight items than gravity tilt in some applications.</td>
+    <td>Honeywell Push-Tray.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/076-push-tray-sorter.mp4"></video><div class="video-meta"><strong>Push Tray | Honeywell Intelligrated</strong><span>Honeywell Intelligrated</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting bomb-bay / split-tray sorter tray doors open underneath, dropping item vertically into destination. honeywell bomb-bay; knapp split tray sorter.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Bomb-bay / split-tray sorter</div><div class="source-line">Source row 272</div></th>
+    <td>Tray doors open underneath, dropping item vertically into destination.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Honeywell quotes up to about 24,000/hour.</td>
+    <td>Tray doors open underneath, dropping item vertically into destination. + Very dense destinations underneath, excellent for apparel/small items. − Drop must be acceptable for product and packaging.</td>
+    <td>Honeywell Bomb-Bay; KNAPP Split Tray Sorter.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/077-bomb-bay-split-tray-sorter.mp4"></video><div class="video-meta"><strong>Bomb Bay | Honeywell Intelligrated</strong><span>Honeywell Intelligrated</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting pouch/pocket sorter one item per hanging pouch circulates, buffers, sequences, then automatically unloads. knapp autopocket/ecopocket; beumer bg pouch; vanderlande airpick.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Pouch/pocket sorter</div><div class="source-line">Source row 273</div></th>
+    <td>One item per hanging pouch circulates, buffers, sequences, then automatically unloads.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: KNAPP's Next deployment uses two AutoPocket modules handling 15,000 items/hour combined, with a separate outbound flow around 5,000 packs/hour.</td>
+    <td>One item per hanging pouch circulates, buffers, sequences, then automatically unloads. − Pouch loading and unusual/bulky items constrain universality.</td>
+    <td>KNAPP AutoPocket/EcoPocket; BEUMER BG Pouch; Vanderlande AIRPICK.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/078-pouch-pocket-sorter.mp4"></video><div class="video-meta"><strong>Zero Touch: flexible sorting for modern logistics demands with AutoPocket® and automatic packaging</strong><span>DFT.</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting amr floor-grid sorter individual robots carry trays/belts between arbitrary induction and destination points. tompkins tsort; libiao; fives geni-ant.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">AMR floor-grid sorter</div><div class="source-line">Source row 274</div></th>
+    <td>Individual robots carry trays/belts between arbitrary induction and destination points.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Tompkins tSort system rating to 40,000 items/hour and 6,000+ destinations; individual units up to 30 kg and 2.5 m/s.</td>
+    <td>− Requires fleet traffic management, chargers and a relatively unobstructed grid.</td>
+    <td>Tompkins tSort; Libiao; Fives GENI-Ant.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/079-amr-floor-grid-sorter.mp4"></video><div class="video-meta"><strong>Gridbots Autobot AMR [ 500 Kg Pallet Shifter Demo]</strong><span>Gridbots Technologies</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting irregular-parcel sorter dedicated mechanism sized for non-conveyables/odd-shaped packages that regular sorters reject. honeywell irregulars sorter; vanderlande/fives parcel systems.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Irregular-parcel sorter</div><div class="source-line">Source row 275</div></th>
+    <td>Dedicated mechanism sized for non-conveyables/odd-shaped packages that regular sorters reject.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: Honeywell's current irregulars platform targets approximately 3,000–5,000 parcels/hour on single-sided configurations.</td>
+    <td>− Higher cost per item and lower rate than regular-parcel sorter.</td>
+    <td>Honeywell Irregulars Sorter; Vanderlande/Fives parcel systems.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/080-irregular-parcel-sorter.mp4"></video><div class="video-meta"><strong>Intelligrated IntelliSort® Irregulars Sorter - automate irregular freight</strong><span>Intelligrated</span></div></td>
+  </tr>
+<tr data-category="Sorting" data-search="sorting pouch matrix/resequence sorter uses buffered pouches plus switching logic to transform chaotic item order into requested sequence. knapp ecopocket / autopocket.">
+    <td class="category"><span>Sorting</span></td>
+    <th scope="row"><div class="mechanism">Pouch matrix/resequence sorter</div><div class="source-line">Source row 276</div></th>
+    <td>Uses buffered pouches plus switching logic to transform chaotic item order into requested sequence.</td>
+    <td>Tracked conveyor flow with barcode/vision identification, encoder position, WCS routing, guarded discharge points and exception handling. Published rates are nominal; sustained rate depends on induction quality, gap, SKU mix and chute recovery. Representative envelope: KNAPP states EcoPocket enables individually tracked RFID carriers and “matrix” resequencing; actual rate is layout-specific.</td>
+    <td>Uses buffered pouches plus switching logic to transform chaotic item order into requested sequence. − Software/control complexity; not useful for items that cannot fit pouch carrier.</td>
+    <td>KNAPP EcoPocket / AutoPocket.</td>
+    <td class="price">RFQ; current public price not defensibly available for an industrial configuration. Quote should include controls, guarding, tooling, installation and commissioning.</td>
+    <td class="video-cell"><video controls preload="metadata" playsinline src="videos/081-pouch-matrix-resequence-sorter.mp4"></video><div class="video-meta"><strong>Revolutionizing Parcel Sorting with BEUMER's BG Line Sorter | Inside DPD Warszawa</strong><span>BEUMER Group TV</span></div></td>
+  </tr></tbody></table></main>
+<footer>Prices are indicative research notes, not quotations. RFQ means the industrial configuration is normally priced by project. Video files are stored locally beside this HTML file for offline playback.</footer>
+<script>(()=>{const search=document.querySelector('#search'),category=document.querySelector('#category'),rows=[...document.querySelectorAll('tbody tr')],count=document.querySelector('#count');const update=()=>{const needle=search.value.trim().toLowerCase(),selected=category.value;let shown=0;rows.forEach(row=>{const matches=(!selected||row.dataset.category===selected)&&(!needle||row.dataset.search.includes(needle));row.classList.toggle('hidden',!matches);if(matches)shown++});count.textContent=shown+' of '+rows.length+' entries'};search.addEventListener('input',update);category.addEventListener('change',update);update()})()</script></body></html>
